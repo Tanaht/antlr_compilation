@@ -1,0 +1,4 @@
+{
+INT truc, bidule
+truc := 153 / 10 * 5 + 3
+}
