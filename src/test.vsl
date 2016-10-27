@@ -1,4 +1,5 @@
 {
-INT truc, bidule
-truc := 153 / 10 * 5 + 3
+  INT truc, bidule
+  truc := 153 / 10 * 5 + 3
+  bidule := 5
 }

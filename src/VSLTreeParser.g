@@ -29,21 +29,20 @@ decl_item [SymbolTable symTab] returns [Code3a code]
 
 declaration [SymbolTable symTab] returns [Code3a code]
     : ^(DECL (a=decl_item[symTab] {
-        if($code == null)
+        if($code == null)//decl_item peut-être présente 1 ou n fois, le if correspond au 1
           $code = $a.code;
-        else
+        else//le else correspond au n
           $code.append($a.code);
       })+)
     ;
 
 inst_list [SymbolTable symTab] returns [Code3a code]
-    : ^(INST a=statement[symTab]+)
-      {
-        if($code == null)
+    : ^(INST (a=statement[symTab] {
+        if($code == null)//statement peut-être présente 1 ou n fois, le if correspond au 1
           $code = $a.code;
-        else
+        else//le else correspond au n
           $code.append($a.code);
-      }
+      })+)
     ;
 
 block [SymbolTable symTab] returns [Code3a code]
