@@ -27,6 +27,13 @@ public class Code3aGenerator {
 		return code;
 	}
 
+	public static Code3a assignVarTab(Operand3a varPlace, ExpAttribute index, ExpAttribute value) {
+		Code3a code = index.code;
+		code.append(value.code);
+		code.append(new Inst3a(Inst3a.TAC.VARTAB, varPlace, index.place, value.place));
+		return code;
+	}
+
 	/**
 	 * Generate code for a binary operation
 	 *

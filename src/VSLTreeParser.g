@@ -46,6 +46,8 @@ inst_list [SymbolTable symTab] returns [Code3a code]
     ;
 
 block [SymbolTable symTab] returns [Code3a code]
+@init{ symTab.enterScope(); }
+@after{ symTab.leaveScope(); }
     : ^(BLOCK a=declaration[symTab] b=inst_list[symTab])
       {
         $code = $a.code;
@@ -58,11 +60,14 @@ block [SymbolTable symTab] returns [Code3a code]
     ;
 
 statement [SymbolTable symTab] returns [Code3a code]
-  : ^(ASSIGN_KW a=expression[symTab] IDENT)
-    {
-      Operand3a var2 = symTab.lookup($IDENT.text);
-      $code = Code3aGenerator.assignVar(var2, $a.expAtt);
-    }
+  : ^(ASSIGN_KW a=expression[symTab] ( IDENT {
+      //Assign Var
+      Operand3a variable = symTab.lookup($IDENT.text);
+      $code = Code3aGenerator.assignVar(variable, $a.expAtt);
+    } | c=array_elem[symTab, $a.expAtt] {
+      //Assign Var Tab
+      $code = $c.code;
+    }))
   | b=block[symTab]
     {
       if($code == null)
@@ -70,7 +75,8 @@ statement [SymbolTable symTab] returns [Code3a code]
       else
         $code.append($b.code);
     }
-  /*| ^(ASSIGN_KW expression array_elem)
+  ;
+  /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
   | READ_KW^ read_list
@@ -78,7 +84,17 @@ statement [SymbolTable symTab] returns [Code3a code]
   | WHILE_KW^ expression DO_KW! statement OD_KW!
   | ^(FCALL_S IDENT argument_list?)
   | block*/
-  ;
+
+/*
+En attendant de trouver une meilleure solution, je passe la valeur à assigner dans le tableau par héritage
+*/
+array_elem [SymbolTable symTab, ExpAttribute valueToAssign] returns [Code3a code]
+    : ^(ARELEM  IDENT a=expression[symTab])
+      {
+        Operand3a variable = symTab.lookup($IDENT.text);
+        $code = Code3aGenerator.assignVarTab(variable, $a.expAtt, valueToAssign);
+      }
+    ;
 
 expression [SymbolTable symTab] returns [ExpAttribute expAtt]
   : ^(PLUS e1=expression[symTab] e2=expression[symTab])
