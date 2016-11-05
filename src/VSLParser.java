@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 VSLParser.g 2016-10-18 09:08:01
+// $ANTLR 3.5.2 ./src/VSLParser.g 2016-11-05 17:48:17
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -91,7 +91,7 @@ public class VSLParser extends Parser {
 		return adaptor;
 	}
 	@Override public String[] getTokenNames() { return VSLParser.tokenNames; }
-	@Override public String getGrammarFileName() { return "VSLParser.g"; }
+	@Override public String getGrammarFileName() { return "./src/VSLParser.g"; }
 
 
 	public static class s_return extends ParserRuleReturnScope {
@@ -102,7 +102,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "s"
-	// VSLParser.g:15:1: s : program ;
+	// ./src/VSLParser.g:15:1: s : program ;
 	public final VSLParser.s_return s() throws RecognitionException {
 		VSLParser.s_return retval = new VSLParser.s_return();
 		retval.start = input.LT(1);
@@ -113,13 +113,13 @@ public class VSLParser extends Parser {
 
 
 		try {
-			// VSLParser.g:16:5: ( program )
-			// VSLParser.g:16:7: program
+			// ./src/VSLParser.g:16:5: ( program )
+			// ./src/VSLParser.g:16:7: program
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_program_in_s95);
+			pushFollow(FOLLOW_program_in_s94);
 			program1=program();
 			state._fsp--;
 
@@ -154,7 +154,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "program"
-	// VSLParser.g:19:1: program : ( unit )+ -> ^( PROG ( unit )+ ) ;
+	// ./src/VSLParser.g:19:1: program : ( unit )+ -> ^( PROG ( unit )+ ) ;
 	public final VSLParser.program_return program() throws RecognitionException {
 		VSLParser.program_return retval = new VSLParser.program_return();
 		retval.start = input.LT(1);
@@ -166,10 +166,10 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_unit=new RewriteRuleSubtreeStream(adaptor,"rule unit");
 
 		try {
-			// VSLParser.g:20:5: ( ( unit )+ -> ^( PROG ( unit )+ ) )
-			// VSLParser.g:20:7: ( unit )+
+			// ./src/VSLParser.g:20:5: ( ( unit )+ -> ^( PROG ( unit )+ ) )
+			// ./src/VSLParser.g:20:7: ( unit )+
 			{
-			// VSLParser.g:20:7: ( unit )+
+			// ./src/VSLParser.g:20:7: ( unit )+
 			int cnt1=0;
 			loop1:
 			while (true) {
@@ -181,9 +181,9 @@ public class VSLParser extends Parser {
 
 				switch (alt1) {
 				case 1 :
-					// VSLParser.g:20:7: unit
+					// ./src/VSLParser.g:20:7: unit
 					{
-					pushFollow(FOLLOW_unit_in_program112);
+					pushFollow(FOLLOW_unit_in_program111);
 					unit2=unit();
 					state._fsp--;
 
@@ -212,7 +212,7 @@ public class VSLParser extends Parser {
 			root_0 = (Object)adaptor.nil();
 			// 20:13: -> ^( PROG ( unit )+ )
 			{
-				// VSLParser.g:20:16: ^( PROG ( unit )+ )
+				// ./src/VSLParser.g:20:16: ^( PROG ( unit )+ )
 				{
 				Object root_1 = (Object)adaptor.nil();
 				root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(PROG, "PROG"), root_1);
@@ -261,7 +261,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "unit"
-	// VSLParser.g:23:1: unit : ( function | proto );
+	// ./src/VSLParser.g:23:1: unit : ( function | proto );
 	public final VSLParser.unit_return unit() throws RecognitionException {
 		VSLParser.unit_return retval = new VSLParser.unit_return();
 		retval.start = input.LT(1);
@@ -273,7 +273,7 @@ public class VSLParser extends Parser {
 
 
 		try {
-			// VSLParser.g:24:5: ( function | proto )
+			// ./src/VSLParser.g:24:5: ( function | proto )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0==FUNC_KW) ) {
@@ -291,12 +291,12 @@ public class VSLParser extends Parser {
 
 			switch (alt2) {
 				case 1 :
-					// VSLParser.g:24:7: function
+					// ./src/VSLParser.g:24:7: function
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_function_in_unit139);
+					pushFollow(FOLLOW_function_in_unit138);
 					function3=function();
 					state._fsp--;
 
@@ -305,12 +305,12 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// VSLParser.g:25:7: proto
+					// ./src/VSLParser.g:25:7: proto
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_proto_in_unit147);
+					pushFollow(FOLLOW_proto_in_unit146);
 					proto4=proto();
 					state._fsp--;
 
@@ -347,7 +347,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "function"
-	// VSLParser.g:28:1: function : FUNC_KW type IDENT LP param_list RP statement -> ^( FUNC_KW type IDENT param_list ^( BODY statement ) ) ;
+	// ./src/VSLParser.g:28:1: function : FUNC_KW type IDENT LP param_list RP statement -> ^( FUNC_KW type IDENT param_list ^( BODY statement ) ) ;
 	public final VSLParser.function_return function() throws RecognitionException {
 		VSLParser.function_return retval = new VSLParser.function_return();
 		retval.start = input.LT(1);
@@ -375,38 +375,38 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_param_list=new RewriteRuleSubtreeStream(adaptor,"rule param_list");
 
 		try {
-			// VSLParser.g:29:5: ( FUNC_KW type IDENT LP param_list RP statement -> ^( FUNC_KW type IDENT param_list ^( BODY statement ) ) )
-			// VSLParser.g:29:7: FUNC_KW type IDENT LP param_list RP statement
+			// ./src/VSLParser.g:29:5: ( FUNC_KW type IDENT LP param_list RP statement -> ^( FUNC_KW type IDENT param_list ^( BODY statement ) ) )
+			// ./src/VSLParser.g:29:7: FUNC_KW type IDENT LP param_list RP statement
 			{
-			FUNC_KW5=(Token)match(input,FUNC_KW,FOLLOW_FUNC_KW_in_function164);  
+			FUNC_KW5=(Token)match(input,FUNC_KW,FOLLOW_FUNC_KW_in_function163);  
 			stream_FUNC_KW.add(FUNC_KW5);
 
-			pushFollow(FOLLOW_type_in_function166);
+			pushFollow(FOLLOW_type_in_function165);
 			type6=type();
 			state._fsp--;
 
 			stream_type.add(type6.getTree());
-			IDENT7=(Token)match(input,IDENT,FOLLOW_IDENT_in_function168);  
+			IDENT7=(Token)match(input,IDENT,FOLLOW_IDENT_in_function167);  
 			stream_IDENT.add(IDENT7);
 
-			LP8=(Token)match(input,LP,FOLLOW_LP_in_function170);  
+			LP8=(Token)match(input,LP,FOLLOW_LP_in_function169);  
 			stream_LP.add(LP8);
 
-			pushFollow(FOLLOW_param_list_in_function172);
+			pushFollow(FOLLOW_param_list_in_function171);
 			param_list9=param_list();
 			state._fsp--;
 
 			stream_param_list.add(param_list9.getTree());
-			RP10=(Token)match(input,RP,FOLLOW_RP_in_function174);  
+			RP10=(Token)match(input,RP,FOLLOW_RP_in_function173);  
 			stream_RP.add(RP10);
 
-			pushFollow(FOLLOW_statement_in_function176);
+			pushFollow(FOLLOW_statement_in_function175);
 			statement11=statement();
 			state._fsp--;
 
 			stream_statement.add(statement11.getTree());
 			// AST REWRITE
-			// elements: IDENT, statement, FUNC_KW, type, param_list
+			// elements: FUNC_KW, param_list, IDENT, statement, type
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -418,14 +418,14 @@ public class VSLParser extends Parser {
 			root_0 = (Object)adaptor.nil();
 			// 29:53: -> ^( FUNC_KW type IDENT param_list ^( BODY statement ) )
 			{
-				// VSLParser.g:29:56: ^( FUNC_KW type IDENT param_list ^( BODY statement ) )
+				// ./src/VSLParser.g:29:56: ^( FUNC_KW type IDENT param_list ^( BODY statement ) )
 				{
 				Object root_1 = (Object)adaptor.nil();
 				root_1 = (Object)adaptor.becomeRoot(stream_FUNC_KW.nextNode(), root_1);
 				adaptor.addChild(root_1, stream_type.nextTree());
 				adaptor.addChild(root_1, stream_IDENT.nextNode());
 				adaptor.addChild(root_1, stream_param_list.nextTree());
-				// VSLParser.g:29:89: ^( BODY statement )
+				// ./src/VSLParser.g:29:89: ^( BODY statement )
 				{
 				Object root_2 = (Object)adaptor.nil();
 				root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(BODY, "BODY"), root_2);
@@ -470,7 +470,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "proto"
-	// VSLParser.g:32:1: proto : PROTO_KW ^ type IDENT LP ! param_list RP !;
+	// ./src/VSLParser.g:32:1: proto : PROTO_KW ^ type IDENT LP ! param_list RP !;
 	public final VSLParser.proto_return proto() throws RecognitionException {
 		VSLParser.proto_return retval = new VSLParser.proto_return();
 		retval.start = input.LT(1);
@@ -490,34 +490,34 @@ public class VSLParser extends Parser {
 		Object RP17_tree=null;
 
 		try {
-			// VSLParser.g:33:5: ( PROTO_KW ^ type IDENT LP ! param_list RP !)
-			// VSLParser.g:33:7: PROTO_KW ^ type IDENT LP ! param_list RP !
+			// ./src/VSLParser.g:33:5: ( PROTO_KW ^ type IDENT LP ! param_list RP !)
+			// ./src/VSLParser.g:33:7: PROTO_KW ^ type IDENT LP ! param_list RP !
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			PROTO_KW12=(Token)match(input,PROTO_KW,FOLLOW_PROTO_KW_in_proto212); 
+			PROTO_KW12=(Token)match(input,PROTO_KW,FOLLOW_PROTO_KW_in_proto211); 
 			PROTO_KW12_tree = (Object)adaptor.create(PROTO_KW12);
 			root_0 = (Object)adaptor.becomeRoot(PROTO_KW12_tree, root_0);
 
-			pushFollow(FOLLOW_type_in_proto215);
+			pushFollow(FOLLOW_type_in_proto214);
 			type13=type();
 			state._fsp--;
 
 			adaptor.addChild(root_0, type13.getTree());
 
-			IDENT14=(Token)match(input,IDENT,FOLLOW_IDENT_in_proto217); 
+			IDENT14=(Token)match(input,IDENT,FOLLOW_IDENT_in_proto216); 
 			IDENT14_tree = (Object)adaptor.create(IDENT14);
 			adaptor.addChild(root_0, IDENT14_tree);
 
-			LP15=(Token)match(input,LP,FOLLOW_LP_in_proto219); 
-			pushFollow(FOLLOW_param_list_in_proto222);
+			LP15=(Token)match(input,LP,FOLLOW_LP_in_proto218); 
+			pushFollow(FOLLOW_param_list_in_proto221);
 			param_list16=param_list();
 			state._fsp--;
 
 			adaptor.addChild(root_0, param_list16.getTree());
 
-			RP17=(Token)match(input,RP,FOLLOW_RP_in_proto224); 
+			RP17=(Token)match(input,RP,FOLLOW_RP_in_proto223); 
 			}
 
 			retval.stop = input.LT(-1);
@@ -547,7 +547,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "type"
-	// VSLParser.g:36:1: type : ( INT_KW ^| VOID_KW ^);
+	// ./src/VSLParser.g:36:1: type : ( INT_KW ^| VOID_KW ^);
 	public final VSLParser.type_return type() throws RecognitionException {
 		VSLParser.type_return retval = new VSLParser.type_return();
 		retval.start = input.LT(1);
@@ -561,7 +561,7 @@ public class VSLParser extends Parser {
 		Object VOID_KW19_tree=null;
 
 		try {
-			// VSLParser.g:37:5: ( INT_KW ^| VOID_KW ^)
+			// ./src/VSLParser.g:37:5: ( INT_KW ^| VOID_KW ^)
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 			if ( (LA3_0==INT_KW) ) {
@@ -579,24 +579,24 @@ public class VSLParser extends Parser {
 
 			switch (alt3) {
 				case 1 :
-					// VSLParser.g:37:7: INT_KW ^
+					// ./src/VSLParser.g:37:7: INT_KW ^
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					INT_KW18=(Token)match(input,INT_KW,FOLLOW_INT_KW_in_type242); 
+					INT_KW18=(Token)match(input,INT_KW,FOLLOW_INT_KW_in_type241); 
 					INT_KW18_tree = (Object)adaptor.create(INT_KW18);
 					root_0 = (Object)adaptor.becomeRoot(INT_KW18_tree, root_0);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:38:7: VOID_KW ^
+					// ./src/VSLParser.g:38:7: VOID_KW ^
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					VOID_KW19=(Token)match(input,VOID_KW,FOLLOW_VOID_KW_in_type252); 
+					VOID_KW19=(Token)match(input,VOID_KW,FOLLOW_VOID_KW_in_type250); 
 					VOID_KW19_tree = (Object)adaptor.create(VOID_KW19);
 					root_0 = (Object)adaptor.becomeRoot(VOID_KW19_tree, root_0);
 
@@ -631,7 +631,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "param_list"
-	// VSLParser.g:41:1: param_list : ( param ( COM param )* -> ^( PARAM ( param )* ) | -> ^( PARAM ) );
+	// ./src/VSLParser.g:41:1: param_list : ( param ( COM param )* -> ^( PARAM ( param )* ) | -> ^( PARAM ) );
 	public final VSLParser.param_list_return param_list() throws RecognitionException {
 		VSLParser.param_list_return retval = new VSLParser.param_list_return();
 		retval.start = input.LT(1);
@@ -647,7 +647,7 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_param=new RewriteRuleSubtreeStream(adaptor,"rule param");
 
 		try {
-			// VSLParser.g:42:5: ( param ( COM param )* -> ^( PARAM ( param )* ) | -> ^( PARAM ) )
+			// ./src/VSLParser.g:42:5: ( param ( COM param )* -> ^( PARAM ( param )* ) | -> ^( PARAM ) )
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0==IDENT) ) {
@@ -665,14 +665,14 @@ public class VSLParser extends Parser {
 
 			switch (alt5) {
 				case 1 :
-					// VSLParser.g:42:7: param ( COM param )*
+					// ./src/VSLParser.g:42:7: param ( COM param )*
 					{
-					pushFollow(FOLLOW_param_in_param_list270);
+					pushFollow(FOLLOW_param_in_param_list268);
 					param20=param();
 					state._fsp--;
 
 					stream_param.add(param20.getTree());
-					// VSLParser.g:42:13: ( COM param )*
+					// ./src/VSLParser.g:42:13: ( COM param )*
 					loop4:
 					while (true) {
 						int alt4=2;
@@ -683,12 +683,12 @@ public class VSLParser extends Parser {
 
 						switch (alt4) {
 						case 1 :
-							// VSLParser.g:42:14: COM param
+							// ./src/VSLParser.g:42:14: COM param
 							{
-							COM21=(Token)match(input,COM,FOLLOW_COM_in_param_list273);  
+							COM21=(Token)match(input,COM,FOLLOW_COM_in_param_list271);  
 							stream_COM.add(COM21);
 
-							pushFollow(FOLLOW_param_in_param_list275);
+							pushFollow(FOLLOW_param_in_param_list273);
 							param22=param();
 							state._fsp--;
 
@@ -714,11 +714,11 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 42:26: -> ^( PARAM ( param )* )
 					{
-						// VSLParser.g:42:29: ^( PARAM ( param )* )
+						// ./src/VSLParser.g:42:29: ^( PARAM ( param )* )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(PARAM, "PARAM"), root_1);
-						// VSLParser.g:42:37: ( param )*
+						// ./src/VSLParser.g:42:37: ( param )*
 						while ( stream_param.hasNext() ) {
 							adaptor.addChild(root_1, stream_param.nextTree());
 						}
@@ -735,7 +735,7 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// VSLParser.g:43:7: 
+					// ./src/VSLParser.g:43:7: 
 					{
 					// AST REWRITE
 					// elements: 
@@ -750,7 +750,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 43:7: -> ^( PARAM )
 					{
-						// VSLParser.g:43:10: ^( PARAM )
+						// ./src/VSLParser.g:43:10: ^( PARAM )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(PARAM, "PARAM"), root_1);
@@ -793,7 +793,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "param"
-	// VSLParser.g:46:1: param : ( IDENT | IDENT LB RB -> ^( ARRAY IDENT ) );
+	// ./src/VSLParser.g:46:1: param : ( IDENT | IDENT LB RB -> ^( ARRAY IDENT ) );
 	public final VSLParser.param_return param() throws RecognitionException {
 		VSLParser.param_return retval = new VSLParser.param_return();
 		retval.start = input.LT(1);
@@ -814,7 +814,7 @@ public class VSLParser extends Parser {
 		RewriteRuleTokenStream stream_LB=new RewriteRuleTokenStream(adaptor,"token LB");
 
 		try {
-			// VSLParser.g:47:5: ( IDENT | IDENT LB RB -> ^( ARRAY IDENT ) )
+			// ./src/VSLParser.g:47:5: ( IDENT | IDENT LB RB -> ^( ARRAY IDENT ) )
 			int alt6=2;
 			int LA6_0 = input.LA(1);
 			if ( (LA6_0==IDENT) ) {
@@ -848,27 +848,27 @@ public class VSLParser extends Parser {
 
 			switch (alt6) {
 				case 1 :
-					// VSLParser.g:47:7: IDENT
+					// ./src/VSLParser.g:47:7: IDENT
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					IDENT23=(Token)match(input,IDENT,FOLLOW_IDENT_in_param315); 
+					IDENT23=(Token)match(input,IDENT,FOLLOW_IDENT_in_param313); 
 					IDENT23_tree = (Object)adaptor.create(IDENT23);
 					adaptor.addChild(root_0, IDENT23_tree);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:48:7: IDENT LB RB
+					// ./src/VSLParser.g:48:7: IDENT LB RB
 					{
-					IDENT24=(Token)match(input,IDENT,FOLLOW_IDENT_in_param323);  
+					IDENT24=(Token)match(input,IDENT,FOLLOW_IDENT_in_param321);  
 					stream_IDENT.add(IDENT24);
 
-					LB25=(Token)match(input,LB,FOLLOW_LB_in_param325);  
+					LB25=(Token)match(input,LB,FOLLOW_LB_in_param323);  
 					stream_LB.add(LB25);
 
-					RB26=(Token)match(input,RB,FOLLOW_RB_in_param327);  
+					RB26=(Token)match(input,RB,FOLLOW_RB_in_param325);  
 					stream_RB.add(RB26);
 
 					// AST REWRITE
@@ -884,7 +884,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 48:19: -> ^( ARRAY IDENT )
 					{
-						// VSLParser.g:48:22: ^( ARRAY IDENT )
+						// ./src/VSLParser.g:48:22: ^( ARRAY IDENT )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(ARRAY, "ARRAY"), root_1);
@@ -928,7 +928,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "statement"
-	// VSLParser.g:51:1: statement : ( IDENT ASSIGN_KW expression -> ^( ASSIGN_KW expression IDENT ) | array_elem ASSIGN_KW expression -> ^( ASSIGN_KW expression array_elem ) | RETURN_KW ^ expression | PRINT_KW ^ print_list | READ_KW ^ read_list | IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !| WHILE_KW ^ expression DO_KW ! statement OD_KW !| IDENT LP ( argument_list )? RP -> ^( FCALL_S IDENT ( argument_list )? ) | block );
+	// ./src/VSLParser.g:51:1: statement : ( IDENT ASSIGN_KW expression -> ^( ASSIGN_KW expression IDENT ) | array_elem ASSIGN_KW expression -> ^( ASSIGN_KW expression array_elem ) | RETURN_KW ^ expression | PRINT_KW ^ print_list | READ_KW ^ read_list | IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !| WHILE_KW ^ expression DO_KW ! statement OD_KW !| IDENT LP ( argument_list )? RP -> ^( FCALL_S IDENT ( argument_list )? ) | block );
 	public final VSLParser.statement_return statement() throws RecognitionException {
 		VSLParser.statement_return retval = new VSLParser.statement_return();
 		retval.start = input.LT(1);
@@ -990,7 +990,7 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_argument_list=new RewriteRuleSubtreeStream(adaptor,"rule argument_list");
 
 		try {
-			// VSLParser.g:52:5: ( IDENT ASSIGN_KW expression -> ^( ASSIGN_KW expression IDENT ) | array_elem ASSIGN_KW expression -> ^( ASSIGN_KW expression array_elem ) | RETURN_KW ^ expression | PRINT_KW ^ print_list | READ_KW ^ read_list | IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !| WHILE_KW ^ expression DO_KW ! statement OD_KW !| IDENT LP ( argument_list )? RP -> ^( FCALL_S IDENT ( argument_list )? ) | block )
+			// ./src/VSLParser.g:52:5: ( IDENT ASSIGN_KW expression -> ^( ASSIGN_KW expression IDENT ) | array_elem ASSIGN_KW expression -> ^( ASSIGN_KW expression array_elem ) | RETURN_KW ^ expression | PRINT_KW ^ print_list | READ_KW ^ read_list | IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !| WHILE_KW ^ expression DO_KW ! statement OD_KW !| IDENT LP ( argument_list )? RP -> ^( FCALL_S IDENT ( argument_list )? ) | block )
 			int alt9=9;
 			switch ( input.LA(1) ) {
 			case IDENT:
@@ -1061,21 +1061,21 @@ public class VSLParser extends Parser {
 			}
 			switch (alt9) {
 				case 1 :
-					// VSLParser.g:52:7: IDENT ASSIGN_KW expression
+					// ./src/VSLParser.g:52:7: IDENT ASSIGN_KW expression
 					{
-					IDENT27=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement352);  
+					IDENT27=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement350);  
 					stream_IDENT.add(IDENT27);
 
-					ASSIGN_KW28=(Token)match(input,ASSIGN_KW,FOLLOW_ASSIGN_KW_in_statement354);  
+					ASSIGN_KW28=(Token)match(input,ASSIGN_KW,FOLLOW_ASSIGN_KW_in_statement352);  
 					stream_ASSIGN_KW.add(ASSIGN_KW28);
 
-					pushFollow(FOLLOW_expression_in_statement356);
+					pushFollow(FOLLOW_expression_in_statement354);
 					expression29=expression();
 					state._fsp--;
 
 					stream_expression.add(expression29.getTree());
 					// AST REWRITE
-					// elements: expression, IDENT, ASSIGN_KW
+					// elements: ASSIGN_KW, expression, IDENT
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1087,7 +1087,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 52:34: -> ^( ASSIGN_KW expression IDENT )
 					{
-						// VSLParser.g:52:37: ^( ASSIGN_KW expression IDENT )
+						// ./src/VSLParser.g:52:37: ^( ASSIGN_KW expression IDENT )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot(stream_ASSIGN_KW.nextNode(), root_1);
@@ -1104,23 +1104,23 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// VSLParser.g:53:7: array_elem ASSIGN_KW expression
+					// ./src/VSLParser.g:53:7: array_elem ASSIGN_KW expression
 					{
-					pushFollow(FOLLOW_array_elem_in_statement374);
+					pushFollow(FOLLOW_array_elem_in_statement372);
 					array_elem30=array_elem();
 					state._fsp--;
 
 					stream_array_elem.add(array_elem30.getTree());
-					ASSIGN_KW31=(Token)match(input,ASSIGN_KW,FOLLOW_ASSIGN_KW_in_statement376);  
+					ASSIGN_KW31=(Token)match(input,ASSIGN_KW,FOLLOW_ASSIGN_KW_in_statement374);  
 					stream_ASSIGN_KW.add(ASSIGN_KW31);
 
-					pushFollow(FOLLOW_expression_in_statement378);
+					pushFollow(FOLLOW_expression_in_statement376);
 					expression32=expression();
 					state._fsp--;
 
 					stream_expression.add(expression32.getTree());
 					// AST REWRITE
-					// elements: array_elem, expression, ASSIGN_KW
+					// elements: expression, array_elem, ASSIGN_KW
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1132,7 +1132,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 53:39: -> ^( ASSIGN_KW expression array_elem )
 					{
-						// VSLParser.g:53:42: ^( ASSIGN_KW expression array_elem )
+						// ./src/VSLParser.g:53:42: ^( ASSIGN_KW expression array_elem )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot(stream_ASSIGN_KW.nextNode(), root_1);
@@ -1149,16 +1149,16 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 3 :
-					// VSLParser.g:54:7: RETURN_KW ^ expression
+					// ./src/VSLParser.g:54:7: RETURN_KW ^ expression
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					RETURN_KW33=(Token)match(input,RETURN_KW,FOLLOW_RETURN_KW_in_statement396); 
+					RETURN_KW33=(Token)match(input,RETURN_KW,FOLLOW_RETURN_KW_in_statement394); 
 					RETURN_KW33_tree = (Object)adaptor.create(RETURN_KW33);
 					root_0 = (Object)adaptor.becomeRoot(RETURN_KW33_tree, root_0);
 
-					pushFollow(FOLLOW_expression_in_statement399);
+					pushFollow(FOLLOW_expression_in_statement397);
 					expression34=expression();
 					state._fsp--;
 
@@ -1167,16 +1167,16 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 4 :
-					// VSLParser.g:55:7: PRINT_KW ^ print_list
+					// ./src/VSLParser.g:55:7: PRINT_KW ^ print_list
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					PRINT_KW35=(Token)match(input,PRINT_KW,FOLLOW_PRINT_KW_in_statement407); 
+					PRINT_KW35=(Token)match(input,PRINT_KW,FOLLOW_PRINT_KW_in_statement405); 
 					PRINT_KW35_tree = (Object)adaptor.create(PRINT_KW35);
 					root_0 = (Object)adaptor.becomeRoot(PRINT_KW35_tree, root_0);
 
-					pushFollow(FOLLOW_print_list_in_statement410);
+					pushFollow(FOLLOW_print_list_in_statement408);
 					print_list36=print_list();
 					state._fsp--;
 
@@ -1185,16 +1185,16 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 5 :
-					// VSLParser.g:56:7: READ_KW ^ read_list
+					// ./src/VSLParser.g:56:7: READ_KW ^ read_list
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					READ_KW37=(Token)match(input,READ_KW,FOLLOW_READ_KW_in_statement418); 
+					READ_KW37=(Token)match(input,READ_KW,FOLLOW_READ_KW_in_statement416); 
 					READ_KW37_tree = (Object)adaptor.create(READ_KW37);
 					root_0 = (Object)adaptor.becomeRoot(READ_KW37_tree, root_0);
 
-					pushFollow(FOLLOW_read_list_in_statement421);
+					pushFollow(FOLLOW_read_list_in_statement419);
 					read_list38=read_list();
 					state._fsp--;
 
@@ -1203,29 +1203,29 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 6 :
-					// VSLParser.g:57:7: IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !
+					// ./src/VSLParser.g:57:7: IF_KW ^ expression THEN_KW ! statement ( ELSE_KW ! statement )? FI_KW !
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					IF_KW39=(Token)match(input,IF_KW,FOLLOW_IF_KW_in_statement429); 
+					IF_KW39=(Token)match(input,IF_KW,FOLLOW_IF_KW_in_statement427); 
 					IF_KW39_tree = (Object)adaptor.create(IF_KW39);
 					root_0 = (Object)adaptor.becomeRoot(IF_KW39_tree, root_0);
 
-					pushFollow(FOLLOW_expression_in_statement432);
+					pushFollow(FOLLOW_expression_in_statement430);
 					expression40=expression();
 					state._fsp--;
 
 					adaptor.addChild(root_0, expression40.getTree());
 
-					THEN_KW41=(Token)match(input,THEN_KW,FOLLOW_THEN_KW_in_statement434); 
-					pushFollow(FOLLOW_statement_in_statement437);
+					THEN_KW41=(Token)match(input,THEN_KW,FOLLOW_THEN_KW_in_statement432); 
+					pushFollow(FOLLOW_statement_in_statement435);
 					statement42=statement();
 					state._fsp--;
 
 					adaptor.addChild(root_0, statement42.getTree());
 
-					// VSLParser.g:57:44: ( ELSE_KW ! statement )?
+					// ./src/VSLParser.g:57:44: ( ELSE_KW ! statement )?
 					int alt7=2;
 					int LA7_0 = input.LA(1);
 					if ( (LA7_0==ELSE_KW) ) {
@@ -1233,10 +1233,10 @@ public class VSLParser extends Parser {
 					}
 					switch (alt7) {
 						case 1 :
-							// VSLParser.g:57:45: ELSE_KW ! statement
+							// ./src/VSLParser.g:57:45: ELSE_KW ! statement
 							{
-							ELSE_KW43=(Token)match(input,ELSE_KW,FOLLOW_ELSE_KW_in_statement440); 
-							pushFollow(FOLLOW_statement_in_statement443);
+							ELSE_KW43=(Token)match(input,ELSE_KW,FOLLOW_ELSE_KW_in_statement438); 
+							pushFollow(FOLLOW_statement_in_statement441);
 							statement44=statement();
 							state._fsp--;
 
@@ -1247,45 +1247,45 @@ public class VSLParser extends Parser {
 
 					}
 
-					FI_KW45=(Token)match(input,FI_KW,FOLLOW_FI_KW_in_statement447); 
+					FI_KW45=(Token)match(input,FI_KW,FOLLOW_FI_KW_in_statement445); 
 					}
 					break;
 				case 7 :
-					// VSLParser.g:58:7: WHILE_KW ^ expression DO_KW ! statement OD_KW !
+					// ./src/VSLParser.g:58:7: WHILE_KW ^ expression DO_KW ! statement OD_KW !
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					WHILE_KW46=(Token)match(input,WHILE_KW,FOLLOW_WHILE_KW_in_statement456); 
+					WHILE_KW46=(Token)match(input,WHILE_KW,FOLLOW_WHILE_KW_in_statement454); 
 					WHILE_KW46_tree = (Object)adaptor.create(WHILE_KW46);
 					root_0 = (Object)adaptor.becomeRoot(WHILE_KW46_tree, root_0);
 
-					pushFollow(FOLLOW_expression_in_statement459);
+					pushFollow(FOLLOW_expression_in_statement457);
 					expression47=expression();
 					state._fsp--;
 
 					adaptor.addChild(root_0, expression47.getTree());
 
-					DO_KW48=(Token)match(input,DO_KW,FOLLOW_DO_KW_in_statement461); 
-					pushFollow(FOLLOW_statement_in_statement464);
+					DO_KW48=(Token)match(input,DO_KW,FOLLOW_DO_KW_in_statement459); 
+					pushFollow(FOLLOW_statement_in_statement462);
 					statement49=statement();
 					state._fsp--;
 
 					adaptor.addChild(root_0, statement49.getTree());
 
-					OD_KW50=(Token)match(input,OD_KW,FOLLOW_OD_KW_in_statement466); 
+					OD_KW50=(Token)match(input,OD_KW,FOLLOW_OD_KW_in_statement464); 
 					}
 					break;
 				case 8 :
-					// VSLParser.g:59:7: IDENT LP ( argument_list )? RP
+					// ./src/VSLParser.g:59:7: IDENT LP ( argument_list )? RP
 					{
-					IDENT51=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement475);  
+					IDENT51=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement473);  
 					stream_IDENT.add(IDENT51);
 
-					LP52=(Token)match(input,LP,FOLLOW_LP_in_statement477);  
+					LP52=(Token)match(input,LP,FOLLOW_LP_in_statement475);  
 					stream_LP.add(LP52);
 
-					// VSLParser.g:59:16: ( argument_list )?
+					// ./src/VSLParser.g:59:16: ( argument_list )?
 					int alt8=2;
 					int LA8_0 = input.LA(1);
 					if ( (LA8_0==IDENT||LA8_0==INTEGER||(LA8_0 >= LP && LA8_0 <= MINUS)) ) {
@@ -1293,9 +1293,9 @@ public class VSLParser extends Parser {
 					}
 					switch (alt8) {
 						case 1 :
-							// VSLParser.g:59:16: argument_list
+							// ./src/VSLParser.g:59:16: argument_list
 							{
-							pushFollow(FOLLOW_argument_list_in_statement479);
+							pushFollow(FOLLOW_argument_list_in_statement477);
 							argument_list53=argument_list();
 							state._fsp--;
 
@@ -1305,7 +1305,7 @@ public class VSLParser extends Parser {
 
 					}
 
-					RP54=(Token)match(input,RP,FOLLOW_RP_in_statement482);  
+					RP54=(Token)match(input,RP,FOLLOW_RP_in_statement480);  
 					stream_RP.add(RP54);
 
 					// AST REWRITE
@@ -1321,12 +1321,12 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 59:34: -> ^( FCALL_S IDENT ( argument_list )? )
 					{
-						// VSLParser.g:59:37: ^( FCALL_S IDENT ( argument_list )? )
+						// ./src/VSLParser.g:59:37: ^( FCALL_S IDENT ( argument_list )? )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(FCALL_S, "FCALL_S"), root_1);
 						adaptor.addChild(root_1, stream_IDENT.nextNode());
-						// VSLParser.g:59:53: ( argument_list )?
+						// ./src/VSLParser.g:59:53: ( argument_list )?
 						if ( stream_argument_list.hasNext() ) {
 							adaptor.addChild(root_1, stream_argument_list.nextTree());
 						}
@@ -1343,12 +1343,12 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 9 :
-					// VSLParser.g:60:7: block
+					// ./src/VSLParser.g:60:7: block
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_block_in_statement501);
+					pushFollow(FOLLOW_block_in_statement499);
 					block55=block();
 					state._fsp--;
 
@@ -1385,7 +1385,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "block"
-	// VSLParser.g:63:1: block : ( LC declaration inst_list RC -> ^( BLOCK declaration inst_list ) | LC inst_list RC -> ^( BLOCK inst_list ) );
+	// ./src/VSLParser.g:63:1: block : ( LC declaration inst_list RC -> ^( BLOCK declaration inst_list ) | LC inst_list RC -> ^( BLOCK inst_list ) );
 	public final VSLParser.block_return block() throws RecognitionException {
 		VSLParser.block_return retval = new VSLParser.block_return();
 		retval.start = input.LT(1);
@@ -1410,7 +1410,7 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_declaration=new RewriteRuleSubtreeStream(adaptor,"rule declaration");
 
 		try {
-			// VSLParser.g:64:5: ( LC declaration inst_list RC -> ^( BLOCK declaration inst_list ) | LC inst_list RC -> ^( BLOCK inst_list ) )
+			// ./src/VSLParser.g:64:5: ( LC declaration inst_list RC -> ^( BLOCK declaration inst_list ) | LC inst_list RC -> ^( BLOCK inst_list ) )
 			int alt10=2;
 			int LA10_0 = input.LA(1);
 			if ( (LA10_0==LC) ) {
@@ -1444,26 +1444,26 @@ public class VSLParser extends Parser {
 
 			switch (alt10) {
 				case 1 :
-					// VSLParser.g:64:7: LC declaration inst_list RC
+					// ./src/VSLParser.g:64:7: LC declaration inst_list RC
 					{
-					LC56=(Token)match(input,LC,FOLLOW_LC_in_block519);  
+					LC56=(Token)match(input,LC,FOLLOW_LC_in_block516);  
 					stream_LC.add(LC56);
 
-					pushFollow(FOLLOW_declaration_in_block521);
+					pushFollow(FOLLOW_declaration_in_block518);
 					declaration57=declaration();
 					state._fsp--;
 
 					stream_declaration.add(declaration57.getTree());
-					pushFollow(FOLLOW_inst_list_in_block523);
+					pushFollow(FOLLOW_inst_list_in_block520);
 					inst_list58=inst_list();
 					state._fsp--;
 
 					stream_inst_list.add(inst_list58.getTree());
-					RC59=(Token)match(input,RC,FOLLOW_RC_in_block525);  
+					RC59=(Token)match(input,RC,FOLLOW_RC_in_block522);  
 					stream_RC.add(RC59);
 
 					// AST REWRITE
-					// elements: declaration, inst_list
+					// elements: inst_list, declaration
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1475,7 +1475,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 64:35: -> ^( BLOCK declaration inst_list )
 					{
-						// VSLParser.g:64:38: ^( BLOCK declaration inst_list )
+						// ./src/VSLParser.g:64:38: ^( BLOCK declaration inst_list )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(BLOCK, "BLOCK"), root_1);
@@ -1492,17 +1492,17 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// VSLParser.g:65:7: LC inst_list RC
+					// ./src/VSLParser.g:65:7: LC inst_list RC
 					{
-					LC60=(Token)match(input,LC,FOLLOW_LC_in_block543);  
+					LC60=(Token)match(input,LC,FOLLOW_LC_in_block540);  
 					stream_LC.add(LC60);
 
-					pushFollow(FOLLOW_inst_list_in_block545);
+					pushFollow(FOLLOW_inst_list_in_block542);
 					inst_list61=inst_list();
 					state._fsp--;
 
 					stream_inst_list.add(inst_list61.getTree());
-					RC62=(Token)match(input,RC,FOLLOW_RC_in_block547);  
+					RC62=(Token)match(input,RC,FOLLOW_RC_in_block544);  
 					stream_RC.add(RC62);
 
 					// AST REWRITE
@@ -1518,7 +1518,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 65:23: -> ^( BLOCK inst_list )
 					{
-						// VSLParser.g:65:26: ^( BLOCK inst_list )
+						// ./src/VSLParser.g:65:26: ^( BLOCK inst_list )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(BLOCK, "BLOCK"), root_1);
@@ -1562,7 +1562,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "array_elem"
-	// VSLParser.g:68:1: array_elem : IDENT LB expression RB -> ^( ARELEM IDENT expression ) ;
+	// ./src/VSLParser.g:68:1: array_elem : IDENT LB expression RB -> ^( ARELEM IDENT expression ) ;
 	public final VSLParser.array_elem_return array_elem() throws RecognitionException {
 		VSLParser.array_elem_return retval = new VSLParser.array_elem_return();
 		retval.start = input.LT(1);
@@ -1583,21 +1583,21 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 
 		try {
-			// VSLParser.g:69:5: ( IDENT LB expression RB -> ^( ARELEM IDENT expression ) )
-			// VSLParser.g:69:7: IDENT LB expression RB
+			// ./src/VSLParser.g:69:5: ( IDENT LB expression RB -> ^( ARELEM IDENT expression ) )
+			// ./src/VSLParser.g:69:7: IDENT LB expression RB
 			{
-			IDENT63=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_elem576);  
+			IDENT63=(Token)match(input,IDENT,FOLLOW_IDENT_in_array_elem569);  
 			stream_IDENT.add(IDENT63);
 
-			LB64=(Token)match(input,LB,FOLLOW_LB_in_array_elem578);  
+			LB64=(Token)match(input,LB,FOLLOW_LB_in_array_elem571);  
 			stream_LB.add(LB64);
 
-			pushFollow(FOLLOW_expression_in_array_elem580);
+			pushFollow(FOLLOW_expression_in_array_elem573);
 			expression65=expression();
 			state._fsp--;
 
 			stream_expression.add(expression65.getTree());
-			RB66=(Token)match(input,RB,FOLLOW_RB_in_array_elem582);  
+			RB66=(Token)match(input,RB,FOLLOW_RB_in_array_elem575);  
 			stream_RB.add(RB66);
 
 			// AST REWRITE
@@ -1613,7 +1613,7 @@ public class VSLParser extends Parser {
 			root_0 = (Object)adaptor.nil();
 			// 69:30: -> ^( ARELEM IDENT expression )
 			{
-				// VSLParser.g:69:34: ^( ARELEM IDENT expression )
+				// ./src/VSLParser.g:69:34: ^( ARELEM IDENT expression )
 				{
 				Object root_1 = (Object)adaptor.nil();
 				root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(ARELEM, "ARELEM"), root_1);
@@ -1656,7 +1656,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "inst_list"
-	// VSLParser.g:72:1: inst_list : ( statement )+ -> ^( INST ( statement )+ ) ;
+	// ./src/VSLParser.g:72:1: inst_list : ( statement )+ -> ^( INST ( statement )+ ) ;
 	public final VSLParser.inst_list_return inst_list() throws RecognitionException {
 		VSLParser.inst_list_return retval = new VSLParser.inst_list_return();
 		retval.start = input.LT(1);
@@ -1668,10 +1668,10 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_statement=new RewriteRuleSubtreeStream(adaptor,"rule statement");
 
 		try {
-			// VSLParser.g:73:5: ( ( statement )+ -> ^( INST ( statement )+ ) )
-			// VSLParser.g:73:7: ( statement )+
+			// ./src/VSLParser.g:73:5: ( ( statement )+ -> ^( INST ( statement )+ ) )
+			// ./src/VSLParser.g:73:7: ( statement )+
 			{
-			// VSLParser.g:73:7: ( statement )+
+			// ./src/VSLParser.g:73:7: ( statement )+
 			int cnt11=0;
 			loop11:
 			while (true) {
@@ -1683,9 +1683,9 @@ public class VSLParser extends Parser {
 
 				switch (alt11) {
 				case 1 :
-					// VSLParser.g:73:7: statement
+					// ./src/VSLParser.g:73:7: statement
 					{
-					pushFollow(FOLLOW_statement_in_inst_list611);
+					pushFollow(FOLLOW_statement_in_inst_list604);
 					statement67=statement();
 					state._fsp--;
 
@@ -1714,7 +1714,7 @@ public class VSLParser extends Parser {
 			root_0 = (Object)adaptor.nil();
 			// 73:18: -> ^( INST ( statement )+ )
 			{
-				// VSLParser.g:73:21: ^( INST ( statement )+ )
+				// ./src/VSLParser.g:73:21: ^( INST ( statement )+ )
 				{
 				Object root_1 = (Object)adaptor.nil();
 				root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(INST, "INST"), root_1);
@@ -1763,7 +1763,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "expression"
-	// VSLParser.g:76:1: expression : factor ( ( PLUS ^| MINUS ^) factor )* ;
+	// ./src/VSLParser.g:76:1: expression : factor ( ( PLUS ^| MINUS ^) factor )* ;
 	public final VSLParser.expression_return expression() throws RecognitionException {
 		VSLParser.expression_return retval = new VSLParser.expression_return();
 		retval.start = input.LT(1);
@@ -1779,19 +1779,19 @@ public class VSLParser extends Parser {
 		Object MINUS70_tree=null;
 
 		try {
-			// VSLParser.g:77:5: ( factor ( ( PLUS ^| MINUS ^) factor )* )
-			// VSLParser.g:77:7: factor ( ( PLUS ^| MINUS ^) factor )*
+			// ./src/VSLParser.g:77:5: ( factor ( ( PLUS ^| MINUS ^) factor )* )
+			// ./src/VSLParser.g:77:7: factor ( ( PLUS ^| MINUS ^) factor )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_factor_in_expression638);
+			pushFollow(FOLLOW_factor_in_expression631);
 			factor68=factor();
 			state._fsp--;
 
 			adaptor.addChild(root_0, factor68.getTree());
 
-			// VSLParser.g:77:14: ( ( PLUS ^| MINUS ^) factor )*
+			// ./src/VSLParser.g:77:14: ( ( PLUS ^| MINUS ^) factor )*
 			loop13:
 			while (true) {
 				int alt13=2;
@@ -1802,9 +1802,9 @@ public class VSLParser extends Parser {
 
 				switch (alt13) {
 				case 1 :
-					// VSLParser.g:77:15: ( PLUS ^| MINUS ^) factor
+					// ./src/VSLParser.g:77:15: ( PLUS ^| MINUS ^) factor
 					{
-					// VSLParser.g:77:15: ( PLUS ^| MINUS ^)
+					// ./src/VSLParser.g:77:15: ( PLUS ^| MINUS ^)
 					int alt12=2;
 					int LA12_0 = input.LA(1);
 					if ( (LA12_0==PLUS) ) {
@@ -1822,18 +1822,18 @@ public class VSLParser extends Parser {
 
 					switch (alt12) {
 						case 1 :
-							// VSLParser.g:77:16: PLUS ^
+							// ./src/VSLParser.g:77:16: PLUS ^
 							{
-							PLUS69=(Token)match(input,PLUS,FOLLOW_PLUS_in_expression642); 
+							PLUS69=(Token)match(input,PLUS,FOLLOW_PLUS_in_expression635); 
 							PLUS69_tree = (Object)adaptor.create(PLUS69);
 							root_0 = (Object)adaptor.becomeRoot(PLUS69_tree, root_0);
 
 							}
 							break;
 						case 2 :
-							// VSLParser.g:77:22: MINUS ^
+							// ./src/VSLParser.g:77:22: MINUS ^
 							{
-							MINUS70=(Token)match(input,MINUS,FOLLOW_MINUS_in_expression645); 
+							MINUS70=(Token)match(input,MINUS,FOLLOW_MINUS_in_expression638); 
 							MINUS70_tree = (Object)adaptor.create(MINUS70);
 							root_0 = (Object)adaptor.becomeRoot(MINUS70_tree, root_0);
 
@@ -1842,7 +1842,7 @@ public class VSLParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_factor_in_expression649);
+					pushFollow(FOLLOW_factor_in_expression642);
 					factor71=factor();
 					state._fsp--;
 
@@ -1885,7 +1885,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "factor"
-	// VSLParser.g:80:1: factor : primary ( ( MUL ^| DIV ^) primary )* ;
+	// ./src/VSLParser.g:80:1: factor : primary ( ( MUL ^| DIV ^) primary )* ;
 	public final VSLParser.factor_return factor() throws RecognitionException {
 		VSLParser.factor_return retval = new VSLParser.factor_return();
 		retval.start = input.LT(1);
@@ -1901,19 +1901,19 @@ public class VSLParser extends Parser {
 		Object DIV74_tree=null;
 
 		try {
-			// VSLParser.g:81:5: ( primary ( ( MUL ^| DIV ^) primary )* )
-			// VSLParser.g:81:7: primary ( ( MUL ^| DIV ^) primary )*
+			// ./src/VSLParser.g:81:5: ( primary ( ( MUL ^| DIV ^) primary )* )
+			// ./src/VSLParser.g:81:7: primary ( ( MUL ^| DIV ^) primary )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_primary_in_factor668);
+			pushFollow(FOLLOW_primary_in_factor661);
 			primary72=primary();
 			state._fsp--;
 
 			adaptor.addChild(root_0, primary72.getTree());
 
-			// VSLParser.g:81:15: ( ( MUL ^| DIV ^) primary )*
+			// ./src/VSLParser.g:81:15: ( ( MUL ^| DIV ^) primary )*
 			loop15:
 			while (true) {
 				int alt15=2;
@@ -1924,9 +1924,9 @@ public class VSLParser extends Parser {
 
 				switch (alt15) {
 				case 1 :
-					// VSLParser.g:81:16: ( MUL ^| DIV ^) primary
+					// ./src/VSLParser.g:81:16: ( MUL ^| DIV ^) primary
 					{
-					// VSLParser.g:81:16: ( MUL ^| DIV ^)
+					// ./src/VSLParser.g:81:16: ( MUL ^| DIV ^)
 					int alt14=2;
 					int LA14_0 = input.LA(1);
 					if ( (LA14_0==MUL) ) {
@@ -1944,18 +1944,18 @@ public class VSLParser extends Parser {
 
 					switch (alt14) {
 						case 1 :
-							// VSLParser.g:81:17: MUL ^
+							// ./src/VSLParser.g:81:17: MUL ^
 							{
-							MUL73=(Token)match(input,MUL,FOLLOW_MUL_in_factor672); 
+							MUL73=(Token)match(input,MUL,FOLLOW_MUL_in_factor665); 
 							MUL73_tree = (Object)adaptor.create(MUL73);
 							root_0 = (Object)adaptor.becomeRoot(MUL73_tree, root_0);
 
 							}
 							break;
 						case 2 :
-							// VSLParser.g:81:22: DIV ^
+							// ./src/VSLParser.g:81:22: DIV ^
 							{
-							DIV74=(Token)match(input,DIV,FOLLOW_DIV_in_factor675); 
+							DIV74=(Token)match(input,DIV,FOLLOW_DIV_in_factor668); 
 							DIV74_tree = (Object)adaptor.create(DIV74);
 							root_0 = (Object)adaptor.becomeRoot(DIV74_tree, root_0);
 
@@ -1964,7 +1964,7 @@ public class VSLParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_primary_in_factor679);
+					pushFollow(FOLLOW_primary_in_factor672);
 					primary75=primary();
 					state._fsp--;
 
@@ -2007,7 +2007,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "primary"
-	// VSLParser.g:84:1: primary : ( INTEGER | IDENT | array_elem | IDENT LP ( argument_list )? RP -> ^( FCALL IDENT ( argument_list )? ) | LP ! expression RP !| MINUS primary -> ^( NEGAT primary ) );
+	// ./src/VSLParser.g:84:1: primary : ( INTEGER | IDENT | array_elem | IDENT LP ( argument_list )? RP -> ^( FCALL IDENT ( argument_list )? ) | LP ! expression RP !| MINUS primary -> ^( NEGAT primary ) );
 	public final VSLParser.primary_return primary() throws RecognitionException {
 		VSLParser.primary_return retval = new VSLParser.primary_return();
 		retval.start = input.LT(1);
@@ -2043,7 +2043,7 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_primary=new RewriteRuleSubtreeStream(adaptor,"rule primary");
 
 		try {
-			// VSLParser.g:85:5: ( INTEGER | IDENT | array_elem | IDENT LP ( argument_list )? RP -> ^( FCALL IDENT ( argument_list )? ) | LP ! expression RP !| MINUS primary -> ^( NEGAT primary ) )
+			// ./src/VSLParser.g:85:5: ( INTEGER | IDENT | array_elem | IDENT LP ( argument_list )? RP -> ^( FCALL IDENT ( argument_list )? ) | LP ! expression RP !| MINUS primary -> ^( NEGAT primary ) )
 			int alt17=6;
 			switch ( input.LA(1) ) {
 			case INTEGER:
@@ -2121,36 +2121,36 @@ public class VSLParser extends Parser {
 			}
 			switch (alt17) {
 				case 1 :
-					// VSLParser.g:85:7: INTEGER
+					// ./src/VSLParser.g:85:7: INTEGER
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					INTEGER76=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_primary698); 
+					INTEGER76=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_primary691); 
 					INTEGER76_tree = (Object)adaptor.create(INTEGER76);
 					adaptor.addChild(root_0, INTEGER76_tree);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:86:7: IDENT
+					// ./src/VSLParser.g:86:7: IDENT
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					IDENT77=(Token)match(input,IDENT,FOLLOW_IDENT_in_primary706); 
+					IDENT77=(Token)match(input,IDENT,FOLLOW_IDENT_in_primary699); 
 					IDENT77_tree = (Object)adaptor.create(IDENT77);
 					adaptor.addChild(root_0, IDENT77_tree);
 
 					}
 					break;
 				case 3 :
-					// VSLParser.g:87:7: array_elem
+					// ./src/VSLParser.g:87:7: array_elem
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_array_elem_in_primary714);
+					pushFollow(FOLLOW_array_elem_in_primary707);
 					array_elem78=array_elem();
 					state._fsp--;
 
@@ -2159,15 +2159,15 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 4 :
-					// VSLParser.g:88:7: IDENT LP ( argument_list )? RP
+					// ./src/VSLParser.g:88:7: IDENT LP ( argument_list )? RP
 					{
-					IDENT79=(Token)match(input,IDENT,FOLLOW_IDENT_in_primary722);  
+					IDENT79=(Token)match(input,IDENT,FOLLOW_IDENT_in_primary715);  
 					stream_IDENT.add(IDENT79);
 
-					LP80=(Token)match(input,LP,FOLLOW_LP_in_primary724);  
+					LP80=(Token)match(input,LP,FOLLOW_LP_in_primary717);  
 					stream_LP.add(LP80);
 
-					// VSLParser.g:88:16: ( argument_list )?
+					// ./src/VSLParser.g:88:16: ( argument_list )?
 					int alt16=2;
 					int LA16_0 = input.LA(1);
 					if ( (LA16_0==IDENT||LA16_0==INTEGER||(LA16_0 >= LP && LA16_0 <= MINUS)) ) {
@@ -2175,9 +2175,9 @@ public class VSLParser extends Parser {
 					}
 					switch (alt16) {
 						case 1 :
-							// VSLParser.g:88:16: argument_list
+							// ./src/VSLParser.g:88:16: argument_list
 							{
-							pushFollow(FOLLOW_argument_list_in_primary726);
+							pushFollow(FOLLOW_argument_list_in_primary719);
 							argument_list81=argument_list();
 							state._fsp--;
 
@@ -2187,7 +2187,7 @@ public class VSLParser extends Parser {
 
 					}
 
-					RP82=(Token)match(input,RP,FOLLOW_RP_in_primary729);  
+					RP82=(Token)match(input,RP,FOLLOW_RP_in_primary722);  
 					stream_RP.add(RP82);
 
 					// AST REWRITE
@@ -2203,12 +2203,12 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 88:34: -> ^( FCALL IDENT ( argument_list )? )
 					{
-						// VSLParser.g:88:37: ^( FCALL IDENT ( argument_list )? )
+						// ./src/VSLParser.g:88:37: ^( FCALL IDENT ( argument_list )? )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(FCALL, "FCALL"), root_1);
 						adaptor.addChild(root_1, stream_IDENT.nextNode());
-						// VSLParser.g:88:51: ( argument_list )?
+						// ./src/VSLParser.g:88:51: ( argument_list )?
 						if ( stream_argument_list.hasNext() ) {
 							adaptor.addChild(root_1, stream_argument_list.nextTree());
 						}
@@ -2225,28 +2225,28 @@ public class VSLParser extends Parser {
 					}
 					break;
 				case 5 :
-					// VSLParser.g:89:7: LP ! expression RP !
+					// ./src/VSLParser.g:89:7: LP ! expression RP !
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					LP83=(Token)match(input,LP,FOLLOW_LP_in_primary748); 
-					pushFollow(FOLLOW_expression_in_primary751);
+					LP83=(Token)match(input,LP,FOLLOW_LP_in_primary741); 
+					pushFollow(FOLLOW_expression_in_primary744);
 					expression84=expression();
 					state._fsp--;
 
 					adaptor.addChild(root_0, expression84.getTree());
 
-					RP85=(Token)match(input,RP,FOLLOW_RP_in_primary753); 
+					RP85=(Token)match(input,RP,FOLLOW_RP_in_primary746); 
 					}
 					break;
 				case 6 :
-					// VSLParser.g:90:7: MINUS primary
+					// ./src/VSLParser.g:90:7: MINUS primary
 					{
-					MINUS86=(Token)match(input,MINUS,FOLLOW_MINUS_in_primary762);  
+					MINUS86=(Token)match(input,MINUS,FOLLOW_MINUS_in_primary755);  
 					stream_MINUS.add(MINUS86);
 
-					pushFollow(FOLLOW_primary_in_primary764);
+					pushFollow(FOLLOW_primary_in_primary757);
 					primary87=primary();
 					state._fsp--;
 
@@ -2264,7 +2264,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 90:21: -> ^( NEGAT primary )
 					{
-						// VSLParser.g:90:24: ^( NEGAT primary )
+						// ./src/VSLParser.g:90:24: ^( NEGAT primary )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(NEGAT, "NEGAT"), root_1);
@@ -2308,7 +2308,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "argument_list"
-	// VSLParser.g:93:1: argument_list : expression ( COM ! expression )* ;
+	// ./src/VSLParser.g:93:1: argument_list : expression ( COM ! expression )* ;
 	public final VSLParser.argument_list_return argument_list() throws RecognitionException {
 		VSLParser.argument_list_return retval = new VSLParser.argument_list_return();
 		retval.start = input.LT(1);
@@ -2322,19 +2322,19 @@ public class VSLParser extends Parser {
 		Object COM89_tree=null;
 
 		try {
-			// VSLParser.g:94:5: ( expression ( COM ! expression )* )
-			// VSLParser.g:94:7: expression ( COM ! expression )*
+			// ./src/VSLParser.g:94:5: ( expression ( COM ! expression )* )
+			// ./src/VSLParser.g:94:7: expression ( COM ! expression )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_expression_in_argument_list789);
+			pushFollow(FOLLOW_expression_in_argument_list782);
 			expression88=expression();
 			state._fsp--;
 
 			adaptor.addChild(root_0, expression88.getTree());
 
-			// VSLParser.g:94:18: ( COM ! expression )*
+			// ./src/VSLParser.g:94:18: ( COM ! expression )*
 			loop18:
 			while (true) {
 				int alt18=2;
@@ -2345,10 +2345,10 @@ public class VSLParser extends Parser {
 
 				switch (alt18) {
 				case 1 :
-					// VSLParser.g:94:19: COM ! expression
+					// ./src/VSLParser.g:94:19: COM ! expression
 					{
-					COM89=(Token)match(input,COM,FOLLOW_COM_in_argument_list792); 
-					pushFollow(FOLLOW_expression_in_argument_list795);
+					COM89=(Token)match(input,COM,FOLLOW_COM_in_argument_list785); 
+					pushFollow(FOLLOW_expression_in_argument_list788);
 					expression90=expression();
 					state._fsp--;
 
@@ -2391,7 +2391,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "print_list"
-	// VSLParser.g:97:1: print_list : print_item ( COM ! print_item )* ;
+	// ./src/VSLParser.g:97:1: print_list : print_item ( COM ! print_item )* ;
 	public final VSLParser.print_list_return print_list() throws RecognitionException {
 		VSLParser.print_list_return retval = new VSLParser.print_list_return();
 		retval.start = input.LT(1);
@@ -2405,19 +2405,19 @@ public class VSLParser extends Parser {
 		Object COM92_tree=null;
 
 		try {
-			// VSLParser.g:98:5: ( print_item ( COM ! print_item )* )
-			// VSLParser.g:98:7: print_item ( COM ! print_item )*
+			// ./src/VSLParser.g:98:5: ( print_item ( COM ! print_item )* )
+			// ./src/VSLParser.g:98:7: print_item ( COM ! print_item )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_print_item_in_print_list814);
+			pushFollow(FOLLOW_print_item_in_print_list807);
 			print_item91=print_item();
 			state._fsp--;
 
 			adaptor.addChild(root_0, print_item91.getTree());
 
-			// VSLParser.g:98:18: ( COM ! print_item )*
+			// ./src/VSLParser.g:98:18: ( COM ! print_item )*
 			loop19:
 			while (true) {
 				int alt19=2;
@@ -2428,10 +2428,10 @@ public class VSLParser extends Parser {
 
 				switch (alt19) {
 				case 1 :
-					// VSLParser.g:98:19: COM ! print_item
+					// ./src/VSLParser.g:98:19: COM ! print_item
 					{
-					COM92=(Token)match(input,COM,FOLLOW_COM_in_print_list817); 
-					pushFollow(FOLLOW_print_item_in_print_list820);
+					COM92=(Token)match(input,COM,FOLLOW_COM_in_print_list810); 
+					pushFollow(FOLLOW_print_item_in_print_list813);
 					print_item93=print_item();
 					state._fsp--;
 
@@ -2474,7 +2474,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "print_item"
-	// VSLParser.g:101:1: print_item : ( TEXT | expression );
+	// ./src/VSLParser.g:101:1: print_item : ( TEXT | expression );
 	public final VSLParser.print_item_return print_item() throws RecognitionException {
 		VSLParser.print_item_return retval = new VSLParser.print_item_return();
 		retval.start = input.LT(1);
@@ -2487,7 +2487,7 @@ public class VSLParser extends Parser {
 		Object TEXT94_tree=null;
 
 		try {
-			// VSLParser.g:102:5: ( TEXT | expression )
+			// ./src/VSLParser.g:102:5: ( TEXT | expression )
 			int alt20=2;
 			int LA20_0 = input.LA(1);
 			if ( (LA20_0==TEXT) ) {
@@ -2505,24 +2505,24 @@ public class VSLParser extends Parser {
 
 			switch (alt20) {
 				case 1 :
-					// VSLParser.g:102:7: TEXT
+					// ./src/VSLParser.g:102:7: TEXT
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					TEXT94=(Token)match(input,TEXT,FOLLOW_TEXT_in_print_item839); 
+					TEXT94=(Token)match(input,TEXT,FOLLOW_TEXT_in_print_item832); 
 					TEXT94_tree = (Object)adaptor.create(TEXT94);
 					adaptor.addChild(root_0, TEXT94_tree);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:103:7: expression
+					// ./src/VSLParser.g:103:7: expression
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_expression_in_print_item847);
+					pushFollow(FOLLOW_expression_in_print_item840);
 					expression95=expression();
 					state._fsp--;
 
@@ -2559,7 +2559,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "read_list"
-	// VSLParser.g:106:1: read_list : read_item ( COM ! read_item )* ;
+	// ./src/VSLParser.g:106:1: read_list : read_item ( COM ! read_item )* ;
 	public final VSLParser.read_list_return read_list() throws RecognitionException {
 		VSLParser.read_list_return retval = new VSLParser.read_list_return();
 		retval.start = input.LT(1);
@@ -2573,19 +2573,19 @@ public class VSLParser extends Parser {
 		Object COM97_tree=null;
 
 		try {
-			// VSLParser.g:107:5: ( read_item ( COM ! read_item )* )
-			// VSLParser.g:107:7: read_item ( COM ! read_item )*
+			// ./src/VSLParser.g:107:5: ( read_item ( COM ! read_item )* )
+			// ./src/VSLParser.g:107:7: read_item ( COM ! read_item )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_read_item_in_read_list864);
+			pushFollow(FOLLOW_read_item_in_read_list857);
 			read_item96=read_item();
 			state._fsp--;
 
 			adaptor.addChild(root_0, read_item96.getTree());
 
-			// VSLParser.g:107:17: ( COM ! read_item )*
+			// ./src/VSLParser.g:107:17: ( COM ! read_item )*
 			loop21:
 			while (true) {
 				int alt21=2;
@@ -2596,10 +2596,10 @@ public class VSLParser extends Parser {
 
 				switch (alt21) {
 				case 1 :
-					// VSLParser.g:107:18: COM ! read_item
+					// ./src/VSLParser.g:107:18: COM ! read_item
 					{
-					COM97=(Token)match(input,COM,FOLLOW_COM_in_read_list867); 
-					pushFollow(FOLLOW_read_item_in_read_list870);
+					COM97=(Token)match(input,COM,FOLLOW_COM_in_read_list860); 
+					pushFollow(FOLLOW_read_item_in_read_list863);
 					read_item98=read_item();
 					state._fsp--;
 
@@ -2642,7 +2642,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "read_item"
-	// VSLParser.g:110:1: read_item : ( IDENT | array_elem );
+	// ./src/VSLParser.g:110:1: read_item : ( IDENT | array_elem );
 	public final VSLParser.read_item_return read_item() throws RecognitionException {
 		VSLParser.read_item_return retval = new VSLParser.read_item_return();
 		retval.start = input.LT(1);
@@ -2655,7 +2655,7 @@ public class VSLParser extends Parser {
 		Object IDENT99_tree=null;
 
 		try {
-			// VSLParser.g:111:5: ( IDENT | array_elem )
+			// ./src/VSLParser.g:111:5: ( IDENT | array_elem )
 			int alt22=2;
 			int LA22_0 = input.LA(1);
 			if ( (LA22_0==IDENT) ) {
@@ -2689,24 +2689,24 @@ public class VSLParser extends Parser {
 
 			switch (alt22) {
 				case 1 :
-					// VSLParser.g:111:7: IDENT
+					// ./src/VSLParser.g:111:7: IDENT
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					IDENT99=(Token)match(input,IDENT,FOLLOW_IDENT_in_read_item889); 
+					IDENT99=(Token)match(input,IDENT,FOLLOW_IDENT_in_read_item882); 
 					IDENT99_tree = (Object)adaptor.create(IDENT99);
 					adaptor.addChild(root_0, IDENT99_tree);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:112:7: array_elem
+					// ./src/VSLParser.g:112:7: array_elem
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					pushFollow(FOLLOW_array_elem_in_read_item897);
+					pushFollow(FOLLOW_array_elem_in_read_item890);
 					array_elem100=array_elem();
 					state._fsp--;
 
@@ -2743,7 +2743,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "declaration"
-	// VSLParser.g:115:1: declaration : ( INT_KW decl_list )+ -> ^( DECL ( decl_list )+ ) ;
+	// ./src/VSLParser.g:115:1: declaration : ( INT_KW decl_list )+ -> ^( DECL ( decl_list )+ ) ;
 	public final VSLParser.declaration_return declaration() throws RecognitionException {
 		VSLParser.declaration_return retval = new VSLParser.declaration_return();
 		retval.start = input.LT(1);
@@ -2758,10 +2758,10 @@ public class VSLParser extends Parser {
 		RewriteRuleSubtreeStream stream_decl_list=new RewriteRuleSubtreeStream(adaptor,"rule decl_list");
 
 		try {
-			// VSLParser.g:116:5: ( ( INT_KW decl_list )+ -> ^( DECL ( decl_list )+ ) )
-			// VSLParser.g:116:7: ( INT_KW decl_list )+
+			// ./src/VSLParser.g:116:5: ( ( INT_KW decl_list )+ -> ^( DECL ( decl_list )+ ) )
+			// ./src/VSLParser.g:116:7: ( INT_KW decl_list )+
 			{
-			// VSLParser.g:116:7: ( INT_KW decl_list )+
+			// ./src/VSLParser.g:116:7: ( INT_KW decl_list )+
 			int cnt23=0;
 			loop23:
 			while (true) {
@@ -2773,12 +2773,12 @@ public class VSLParser extends Parser {
 
 				switch (alt23) {
 				case 1 :
-					// VSLParser.g:116:8: INT_KW decl_list
+					// ./src/VSLParser.g:116:8: INT_KW decl_list
 					{
-					INT_KW101=(Token)match(input,INT_KW,FOLLOW_INT_KW_in_declaration915);  
+					INT_KW101=(Token)match(input,INT_KW,FOLLOW_INT_KW_in_declaration908);  
 					stream_INT_KW.add(INT_KW101);
 
-					pushFollow(FOLLOW_decl_list_in_declaration917);
+					pushFollow(FOLLOW_decl_list_in_declaration910);
 					decl_list102=decl_list();
 					state._fsp--;
 
@@ -2807,7 +2807,7 @@ public class VSLParser extends Parser {
 			root_0 = (Object)adaptor.nil();
 			// 116:28: -> ^( DECL ( decl_list )+ )
 			{
-				// VSLParser.g:116:32: ^( DECL ( decl_list )+ )
+				// ./src/VSLParser.g:116:32: ^( DECL ( decl_list )+ )
 				{
 				Object root_1 = (Object)adaptor.nil();
 				root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(DECL, "DECL"), root_1);
@@ -2856,7 +2856,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "decl_list"
-	// VSLParser.g:119:1: decl_list : decl_item ( COM ! decl_item )* ;
+	// ./src/VSLParser.g:119:1: decl_list : decl_item ( COM ! decl_item )* ;
 	public final VSLParser.decl_list_return decl_list() throws RecognitionException {
 		VSLParser.decl_list_return retval = new VSLParser.decl_list_return();
 		retval.start = input.LT(1);
@@ -2870,19 +2870,19 @@ public class VSLParser extends Parser {
 		Object COM104_tree=null;
 
 		try {
-			// VSLParser.g:120:5: ( decl_item ( COM ! decl_item )* )
-			// VSLParser.g:120:7: decl_item ( COM ! decl_item )*
+			// ./src/VSLParser.g:120:5: ( decl_item ( COM ! decl_item )* )
+			// ./src/VSLParser.g:120:7: decl_item ( COM ! decl_item )*
 			{
 			root_0 = (Object)adaptor.nil();
 
 
-			pushFollow(FOLLOW_decl_item_in_decl_list948);
+			pushFollow(FOLLOW_decl_item_in_decl_list940);
 			decl_item103=decl_item();
 			state._fsp--;
 
 			adaptor.addChild(root_0, decl_item103.getTree());
 
-			// VSLParser.g:120:17: ( COM ! decl_item )*
+			// ./src/VSLParser.g:120:17: ( COM ! decl_item )*
 			loop24:
 			while (true) {
 				int alt24=2;
@@ -2893,10 +2893,10 @@ public class VSLParser extends Parser {
 
 				switch (alt24) {
 				case 1 :
-					// VSLParser.g:120:18: COM ! decl_item
+					// ./src/VSLParser.g:120:18: COM ! decl_item
 					{
-					COM104=(Token)match(input,COM,FOLLOW_COM_in_decl_list951); 
-					pushFollow(FOLLOW_decl_item_in_decl_list954);
+					COM104=(Token)match(input,COM,FOLLOW_COM_in_decl_list943); 
+					pushFollow(FOLLOW_decl_item_in_decl_list946);
 					decl_item105=decl_item();
 					state._fsp--;
 
@@ -2939,7 +2939,7 @@ public class VSLParser extends Parser {
 
 
 	// $ANTLR start "decl_item"
-	// VSLParser.g:123:1: decl_item : ( IDENT | IDENT LB INTEGER RB -> ^( ARDECL IDENT INTEGER ) );
+	// ./src/VSLParser.g:123:1: decl_item : ( IDENT | IDENT LB INTEGER RB -> ^( ARDECL IDENT INTEGER ) );
 	public final VSLParser.decl_item_return decl_item() throws RecognitionException {
 		VSLParser.decl_item_return retval = new VSLParser.decl_item_return();
 		retval.start = input.LT(1);
@@ -2963,7 +2963,7 @@ public class VSLParser extends Parser {
 		RewriteRuleTokenStream stream_INTEGER=new RewriteRuleTokenStream(adaptor,"token INTEGER");
 
 		try {
-			// VSLParser.g:124:5: ( IDENT | IDENT LB INTEGER RB -> ^( ARDECL IDENT INTEGER ) )
+			// ./src/VSLParser.g:124:5: ( IDENT | IDENT LB INTEGER RB -> ^( ARDECL IDENT INTEGER ) )
 			int alt25=2;
 			int LA25_0 = input.LA(1);
 			if ( (LA25_0==IDENT) ) {
@@ -2997,30 +2997,30 @@ public class VSLParser extends Parser {
 
 			switch (alt25) {
 				case 1 :
-					// VSLParser.g:124:7: IDENT
+					// ./src/VSLParser.g:124:7: IDENT
 					{
 					root_0 = (Object)adaptor.nil();
 
 
-					IDENT106=(Token)match(input,IDENT,FOLLOW_IDENT_in_decl_item973); 
+					IDENT106=(Token)match(input,IDENT,FOLLOW_IDENT_in_decl_item965); 
 					IDENT106_tree = (Object)adaptor.create(IDENT106);
 					adaptor.addChild(root_0, IDENT106_tree);
 
 					}
 					break;
 				case 2 :
-					// VSLParser.g:125:7: IDENT LB INTEGER RB
+					// ./src/VSLParser.g:125:7: IDENT LB INTEGER RB
 					{
-					IDENT107=(Token)match(input,IDENT,FOLLOW_IDENT_in_decl_item981);  
+					IDENT107=(Token)match(input,IDENT,FOLLOW_IDENT_in_decl_item973);  
 					stream_IDENT.add(IDENT107);
 
-					LB108=(Token)match(input,LB,FOLLOW_LB_in_decl_item983);  
+					LB108=(Token)match(input,LB,FOLLOW_LB_in_decl_item975);  
 					stream_LB.add(LB108);
 
-					INTEGER109=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_decl_item985);  
+					INTEGER109=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_decl_item977);  
 					stream_INTEGER.add(INTEGER109);
 
-					RB110=(Token)match(input,RB,FOLLOW_RB_in_decl_item987);  
+					RB110=(Token)match(input,RB,FOLLOW_RB_in_decl_item979);  
 					stream_RB.add(RB110);
 
 					// AST REWRITE
@@ -3036,7 +3036,7 @@ public class VSLParser extends Parser {
 					root_0 = (Object)adaptor.nil();
 					// 125:27: -> ^( ARDECL IDENT INTEGER )
 					{
-						// VSLParser.g:125:30: ^( ARDECL IDENT INTEGER )
+						// ./src/VSLParser.g:125:30: ^( ARDECL IDENT INTEGER )
 						{
 						Object root_1 = (Object)adaptor.nil();
 						root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(ARDECL, "ARDECL"), root_1);
@@ -3076,114 +3076,114 @@ public class VSLParser extends Parser {
 
 
 
-	public static final BitSet FOLLOW_program_in_s95 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_unit_in_program112 = new BitSet(new long[]{0x0000000008002002L});
-	public static final BitSet FOLLOW_function_in_unit139 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_proto_in_unit147 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FUNC_KW_in_function164 = new BitSet(new long[]{0x0000000800020000L});
-	public static final BitSet FOLLOW_type_in_function166 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_IDENT_in_function168 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_LP_in_function170 = new BitSet(new long[]{0x0000000100004000L});
-	public static final BitSet FOLLOW_param_list_in_function172 = new BitSet(new long[]{0x0000000100000000L});
-	public static final BitSet FOLLOW_RP_in_function174 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_statement_in_function176 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PROTO_KW_in_proto212 = new BitSet(new long[]{0x0000000800020000L});
-	public static final BitSet FOLLOW_type_in_proto215 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_IDENT_in_proto217 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_LP_in_proto219 = new BitSet(new long[]{0x0000000100004000L});
-	public static final BitSet FOLLOW_param_list_in_proto222 = new BitSet(new long[]{0x0000000100000000L});
-	public static final BitSet FOLLOW_RP_in_proto224 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_KW_in_type242 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_VOID_KW_in_type252 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_param_in_param_list270 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_COM_in_param_list273 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_param_in_param_list275 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_IDENT_in_param315 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_param323 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_LB_in_param325 = new BitSet(new long[]{0x0000000010000000L});
-	public static final BitSet FOLLOW_RB_in_param327 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_statement352 = new BitSet(new long[]{0x0000000000000020L});
-	public static final BitSet FOLLOW_ASSIGN_KW_in_statement354 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_statement356 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_elem_in_statement374 = new BitSet(new long[]{0x0000000000000020L});
-	public static final BitSet FOLLOW_ASSIGN_KW_in_statement376 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_statement378 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RETURN_KW_in_statement396 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_statement399 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PRINT_KW_in_statement407 = new BitSet(new long[]{0x0000000200614000L});
-	public static final BitSet FOLLOW_print_list_in_statement410 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_READ_KW_in_statement418 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_read_list_in_statement421 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_KW_in_statement429 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_statement432 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_THEN_KW_in_statement434 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_statement_in_statement437 = new BitSet(new long[]{0x0000000000001800L});
-	public static final BitSet FOLLOW_ELSE_KW_in_statement440 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_statement_in_statement443 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_FI_KW_in_statement447 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_WHILE_KW_in_statement456 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_statement459 = new BitSet(new long[]{0x0000000000000400L});
-	public static final BitSet FOLLOW_DO_KW_in_statement461 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_statement_in_statement464 = new BitSet(new long[]{0x0000000001000000L});
-	public static final BitSet FOLLOW_OD_KW_in_statement466 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_statement475 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_LP_in_statement477 = new BitSet(new long[]{0x0000000100614000L});
-	public static final BitSet FOLLOW_argument_list_in_statement479 = new BitSet(new long[]{0x0000000100000000L});
-	public static final BitSet FOLLOW_RP_in_statement482 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_block_in_statement501 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LC_in_block519 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_declaration_in_block521 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_inst_list_in_block523 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_RC_in_block525 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LC_in_block543 = new BitSet(new long[]{0x00000010C408C000L});
-	public static final BitSet FOLLOW_inst_list_in_block545 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_RC_in_block547 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_array_elem576 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_LB_in_array_elem578 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_array_elem580 = new BitSet(new long[]{0x0000000010000000L});
-	public static final BitSet FOLLOW_RB_in_array_elem582 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_statement_in_inst_list611 = new BitSet(new long[]{0x00000010C408C002L});
-	public static final BitSet FOLLOW_factor_in_expression638 = new BitSet(new long[]{0x0000000002400002L});
-	public static final BitSet FOLLOW_PLUS_in_expression642 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_MINUS_in_expression645 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_factor_in_expression649 = new BitSet(new long[]{0x0000000002400002L});
-	public static final BitSet FOLLOW_primary_in_factor668 = new BitSet(new long[]{0x0000000000800202L});
-	public static final BitSet FOLLOW_MUL_in_factor672 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_DIV_in_factor675 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_primary_in_factor679 = new BitSet(new long[]{0x0000000000800202L});
-	public static final BitSet FOLLOW_INTEGER_in_primary698 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_primary706 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_elem_in_primary714 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_primary722 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_LP_in_primary724 = new BitSet(new long[]{0x0000000100614000L});
-	public static final BitSet FOLLOW_argument_list_in_primary726 = new BitSet(new long[]{0x0000000100000000L});
-	public static final BitSet FOLLOW_RP_in_primary729 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LP_in_primary748 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_primary751 = new BitSet(new long[]{0x0000000100000000L});
-	public static final BitSet FOLLOW_RP_in_primary753 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_MINUS_in_primary762 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_primary_in_primary764 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expression_in_argument_list789 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_COM_in_argument_list792 = new BitSet(new long[]{0x0000000000614000L});
-	public static final BitSet FOLLOW_expression_in_argument_list795 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_print_item_in_print_list814 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_COM_in_print_list817 = new BitSet(new long[]{0x0000000200614000L});
-	public static final BitSet FOLLOW_print_item_in_print_list820 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_TEXT_in_print_item839 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expression_in_print_item847 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_read_item_in_read_list864 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_COM_in_read_list867 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_read_item_in_read_list870 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_IDENT_in_read_item889 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_elem_in_read_item897 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_KW_in_declaration915 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_decl_list_in_declaration917 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_decl_item_in_decl_list948 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_COM_in_decl_list951 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_decl_item_in_decl_list954 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_IDENT_in_decl_item973 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDENT_in_decl_item981 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_LB_in_decl_item983 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_INTEGER_in_decl_item985 = new BitSet(new long[]{0x0000000010000000L});
-	public static final BitSet FOLLOW_RB_in_decl_item987 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_program_in_s94 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_unit_in_program111 = new BitSet(new long[]{0x0000000008002002L});
+	public static final BitSet FOLLOW_function_in_unit138 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_proto_in_unit146 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FUNC_KW_in_function163 = new BitSet(new long[]{0x0000000800020000L});
+	public static final BitSet FOLLOW_type_in_function165 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_IDENT_in_function167 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_LP_in_function169 = new BitSet(new long[]{0x0000000100004000L});
+	public static final BitSet FOLLOW_param_list_in_function171 = new BitSet(new long[]{0x0000000100000000L});
+	public static final BitSet FOLLOW_RP_in_function173 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_statement_in_function175 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PROTO_KW_in_proto211 = new BitSet(new long[]{0x0000000800020000L});
+	public static final BitSet FOLLOW_type_in_proto214 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_IDENT_in_proto216 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_LP_in_proto218 = new BitSet(new long[]{0x0000000100004000L});
+	public static final BitSet FOLLOW_param_list_in_proto221 = new BitSet(new long[]{0x0000000100000000L});
+	public static final BitSet FOLLOW_RP_in_proto223 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_KW_in_type241 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_VOID_KW_in_type250 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_param_in_param_list268 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_COM_in_param_list271 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_param_in_param_list273 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_IDENT_in_param313 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_param321 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_LB_in_param323 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_RB_in_param325 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_statement350 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_ASSIGN_KW_in_statement352 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_statement354 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_elem_in_statement372 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_ASSIGN_KW_in_statement374 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_statement376 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RETURN_KW_in_statement394 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_statement397 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PRINT_KW_in_statement405 = new BitSet(new long[]{0x0000000200614000L});
+	public static final BitSet FOLLOW_print_list_in_statement408 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_READ_KW_in_statement416 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_read_list_in_statement419 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_KW_in_statement427 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_statement430 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_THEN_KW_in_statement432 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_statement_in_statement435 = new BitSet(new long[]{0x0000000000001800L});
+	public static final BitSet FOLLOW_ELSE_KW_in_statement438 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_statement_in_statement441 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_FI_KW_in_statement445 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_WHILE_KW_in_statement454 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_statement457 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_DO_KW_in_statement459 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_statement_in_statement462 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_OD_KW_in_statement464 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_statement473 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_LP_in_statement475 = new BitSet(new long[]{0x0000000100614000L});
+	public static final BitSet FOLLOW_argument_list_in_statement477 = new BitSet(new long[]{0x0000000100000000L});
+	public static final BitSet FOLLOW_RP_in_statement480 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_block_in_statement499 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LC_in_block516 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_declaration_in_block518 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_inst_list_in_block520 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_RC_in_block522 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LC_in_block540 = new BitSet(new long[]{0x00000010C408C000L});
+	public static final BitSet FOLLOW_inst_list_in_block542 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_RC_in_block544 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_array_elem569 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_LB_in_array_elem571 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_array_elem573 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_RB_in_array_elem575 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_statement_in_inst_list604 = new BitSet(new long[]{0x00000010C408C002L});
+	public static final BitSet FOLLOW_factor_in_expression631 = new BitSet(new long[]{0x0000000002400002L});
+	public static final BitSet FOLLOW_PLUS_in_expression635 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_MINUS_in_expression638 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_factor_in_expression642 = new BitSet(new long[]{0x0000000002400002L});
+	public static final BitSet FOLLOW_primary_in_factor661 = new BitSet(new long[]{0x0000000000800202L});
+	public static final BitSet FOLLOW_MUL_in_factor665 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_DIV_in_factor668 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_primary_in_factor672 = new BitSet(new long[]{0x0000000000800202L});
+	public static final BitSet FOLLOW_INTEGER_in_primary691 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_primary699 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_elem_in_primary707 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_primary715 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_LP_in_primary717 = new BitSet(new long[]{0x0000000100614000L});
+	public static final BitSet FOLLOW_argument_list_in_primary719 = new BitSet(new long[]{0x0000000100000000L});
+	public static final BitSet FOLLOW_RP_in_primary722 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LP_in_primary741 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_primary744 = new BitSet(new long[]{0x0000000100000000L});
+	public static final BitSet FOLLOW_RP_in_primary746 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_MINUS_in_primary755 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_primary_in_primary757 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expression_in_argument_list782 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_COM_in_argument_list785 = new BitSet(new long[]{0x0000000000614000L});
+	public static final BitSet FOLLOW_expression_in_argument_list788 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_print_item_in_print_list807 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_COM_in_print_list810 = new BitSet(new long[]{0x0000000200614000L});
+	public static final BitSet FOLLOW_print_item_in_print_list813 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_TEXT_in_print_item832 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expression_in_print_item840 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_read_item_in_read_list857 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_COM_in_read_list860 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_read_item_in_read_list863 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_IDENT_in_read_item882 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_elem_in_read_item890 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_KW_in_declaration908 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_decl_list_in_declaration910 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_decl_item_in_decl_list940 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_COM_in_decl_list943 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_decl_item_in_decl_list946 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_IDENT_in_decl_item965 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDENT_in_decl_item973 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_LB_in_decl_item975 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_INTEGER_in_decl_item977 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_RB_in_decl_item979 = new BitSet(new long[]{0x0000000000000002L});
 }

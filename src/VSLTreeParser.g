@@ -75,12 +75,36 @@ statement [SymbolTable symTab] returns [Code3a code]
       else
         $code.append($b.code);
     }
+  | IF_KW^ e=expression THEN_KW! s1=statement 
+	{
+		
+		LabelSymbol vrai = SymbDistrib.newLabel();
+		LabelSymbol faux = SymbDistrib.newLabel();
+		LabelSymbol fin = SymbDistrib.newLabel();
+
+		VarSymbol t1 = newTemp();
+		Code3aGenerator.assignVar(t1, $e.expAtt);
+	
+		$code = new Inst3a(Inst3a.TAC.IFZ, t1, vrai, null, null);
+			
+	}
+	(ELSE_KW! s2=statement
+	{
+		$code.append(faux);
+		$code.append($s2.code);
+		$code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null, null));
+	})? 
+	FI_KW! 
+	{
+		$code.append(vrai);
+		$code.append($s1.code);
+		$code.append(fin);	
+	}
   ;
   /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
   | READ_KW^ read_list
-  | IF_KW^ expression THEN_KW! statement (ELSE_KW! statement)? FI_KW!
   | WHILE_KW^ expression DO_KW! statement OD_KW!
   | ^(FCALL_S IDENT argument_list?)
   | block*/
