@@ -75,32 +75,53 @@ statement [SymbolTable symTab] returns [Code3a code]
       else
         $code.append($b.code);
     }
-  | IF_KW^ e=expression THEN_KW! s1=statement 
+  | ^(IF_KW e=expression[symTab]  s1=statement[symTab] 
 	{
-		
 		LabelSymbol vrai = SymbDistrib.newLabel();
 		LabelSymbol faux = SymbDistrib.newLabel();
 		LabelSymbol fin = SymbDistrib.newLabel();
 
-		VarSymbol t1 = newTemp();
-		Code3aGenerator.assignVar(t1, $e.expAtt);
-	
-		$code = new Inst3a(Inst3a.TAC.IFZ, t1, vrai, null, null);
+		VarSymbol t1 = SymbDistrib.newTemp();
+
+		$code = Code3aGenerator.assignVar(t1, $e.expAtt);
+
+		$code.append(new Inst3a(Inst3a.TAC.IFZ, t1, faux, null));
+
+		$code.append($s1.code);
+		$code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null));
+
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, faux, null, null));
 			
 	}
-	(ELSE_KW! s2=statement
+	(s2=statement[symTab] 
 	{
-		$code.append(faux);
 		$code.append($s2.code);
-		$code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null, null));
 	})? 
-	FI_KW! 
 	{
-		$code.append(vrai);
+		
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));	
+	}
+	)
+  | ^(WHILE_KW e=expression[symTab] s1=statement[symTab])
+	{
+		LabelSymbol debut = SymbDistrib.newLabel();
+		LabelSymbol fin = SymbDistrib.newLabel();
+		$code = new Code3a();		
+
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, debut, null, null));
+		
+		VarSymbol t1 = SymbDistrib.newTemp();
+		$code.append(Code3aGenerator.assignVar(t1, $e.expAtt));
+		
+		$code.append(new Inst3a(Inst3a.TAC.IFZ, t1, fin, null));
+
 		$code.append($s1.code);
-		$code.append(fin);	
+
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
+		
 	}
   ;
+
   /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
