@@ -1,5 +1,11 @@
 tree grammar VSLTreeParser;
 
+/*
+SymbDistrib.builtinPrintN
+SymbDistrib.builtinPrintS
+SymbDistrib.builtinRead
+*/
+
 options {
   language     = Java;
   tokenVocab   = VSLParser;
@@ -64,7 +70,7 @@ statement [SymbolTable symTab] returns [Code3a code]
       //Assign Var
       Operand3a variable = symTab.lookup($IDENT.text);
       $code = Code3aGenerator.assignVar(variable, $a.expAtt);
-    } | c=array_elem[symTab, $a.expAtt] {
+    } | c=array_elem_assign[symTab, $a.expAtt] {
       //Assign Var Tab
       $code = $c.code;
     }))
@@ -75,52 +81,46 @@ statement [SymbolTable symTab] returns [Code3a code]
       else
         $code.append($b.code);
     }
-  | ^(IF_KW e=expression[symTab]  s1=statement[symTab] 
+  |  ^(PRINT_KW (z=print_item[symTab]
+    {
+      if($code == null)
+        $code = $z.code;
+      else
+        $code.append($z.code);
+    })+)
+  | ^(IF_KW e=expression[symTab]  s1=statement[symTab]
 	{
-		LabelSymbol vrai = SymbDistrib.newLabel();
-		LabelSymbol faux = SymbDistrib.newLabel();
-		LabelSymbol fin = SymbDistrib.newLabel();
+    LabelSymbol fin = SymbDistrib.newLabel();
+		$code = Code3aGenerator.genIf($e.expAtt, $s1.code, fin);
 
-		VarSymbol t1 = SymbDistrib.newTemp();
-
-		$code = Code3aGenerator.assignVar(t1, $e.expAtt);
-
-		$code.append(new Inst3a(Inst3a.TAC.IFZ, t1, faux, null));
-
-		$code.append($s1.code);
-		$code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null));
-
-		$code.append(new Inst3a(Inst3a.TAC.LABEL, faux, null, null));
-			
 	}
-	(s2=statement[symTab] 
+	(s2=statement[symTab]
 	{
 		$code.append($s2.code);
-	})? 
+	})?
 	{
-		
-		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));	
+
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
 	}
 	)
   | ^(WHILE_KW e=expression[symTab] s1=statement[symTab])
 	{
-		LabelSymbol debut = SymbDistrib.newLabel();
-		LabelSymbol fin = SymbDistrib.newLabel();
-		$code = new Code3a();		
+		$code = Code3aGenerator.genWhile($e.expAtt, $s1.code);
 
-		$code.append(new Inst3a(Inst3a.TAC.LABEL, debut, null, null));
-		
-		VarSymbol t1 = SymbDistrib.newTemp();
-		$code.append(Code3aGenerator.assignVar(t1, $e.expAtt));
-		
-		$code.append(new Inst3a(Inst3a.TAC.IFZ, t1, fin, null));
-
-		$code.append($s1.code);
-
-		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
-		
 	}
   ;
+
+  print_item [SymbolTable symTab] returns [Code3a code]
+    : TEXT
+      {
+        LabelSymbol label = new LabelSymbol($TEXT.text);
+        $code = Code3aGenerator.callPrintS(label);
+      }
+    | a=expression[symTab]
+      {
+        $code = Code3aGenerator.callPrintN($a.expAtt.place);
+      }
+    ;
 
   /*
   | RETURN_KW^ expression
@@ -130,14 +130,23 @@ statement [SymbolTable symTab] returns [Code3a code]
   | ^(FCALL_S IDENT argument_list?)
   | block*/
 
-/*
-En attendant de trouver une meilleure solution, je passe la valeur à assigner dans le tableau par héritage
-*/
-array_elem [SymbolTable symTab, ExpAttribute valueToAssign] returns [Code3a code]
+
+array_elem_assign [SymbolTable symTab, ExpAttribute valueToAssign] returns [Code3a code]
     : ^(ARELEM  IDENT a=expression[symTab])
       {
         Operand3a variable = symTab.lookup($IDENT.text);
         $code = Code3aGenerator.assignVarTab(variable, $a.expAtt, valueToAssign);
+      }
+    ;
+
+array_elem_value [SymbolTable symTab] returns [ExpAttribute expAtt]
+    : ^(ARELEM  IDENT a=expression[symTab])
+      {
+        VarSymbol temp = SymbDistrib.newTemp();
+        Operand3a variable = symTab.lookup($IDENT.text);
+
+        Code3a code = new Code3a(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place));
+        $expAtt = new ExpAttribute(variable.type, code, temp);
       }
     ;
 
@@ -191,5 +200,9 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
     {
       Operand3a id = symTab.lookup($IDENT.text);
       expAtt = new ExpAttribute(id.type, new Code3a(), symTab.lookup($IDENT.text));
+    }
+  | a=array_elem_value[symTab]
+    {
+      $expAtt = $a.expAtt;
     }
   ;

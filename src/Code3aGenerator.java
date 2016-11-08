@@ -34,6 +34,41 @@ public class Code3aGenerator {
 		return code;
 	}
 
+	public static Code3a genWhile(ExpAttribute cond, Code3a inst) {
+		LabelSymbol debut = SymbDistrib.newLabel();
+		LabelSymbol fin = SymbDistrib.newLabel();
+		Code3a code = new Code3a();
+
+		code.append(new Inst3a(Inst3a.TAC.LABEL, debut, null, null));
+
+		VarSymbol temp = SymbDistrib.newTemp();
+		code.append(Code3aGenerator.assignVar(temp, cond));
+
+		code.append(new Inst3a(Inst3a.TAC.IFZ, temp, fin, null));
+
+		code.append(inst);
+    code.append(new Inst3a(Inst3a.TAC.GOTO, debut, null, null));
+		code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
+		return code;
+	}
+
+	public static Code3a genIf(ExpAttribute cond, Code3a then, LabelSymbol fin) {
+		LabelSymbol vrai = SymbDistrib.newLabel();
+		LabelSymbol faux = SymbDistrib.newLabel();
+
+		VarSymbol t1 = SymbDistrib.newTemp();
+
+		Code3a code = Code3aGenerator.assignVar(t1, cond);
+
+		code.append(new Inst3a(Inst3a.TAC.IFZ, t1, faux, null));
+
+		code.append(then);
+		code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null));
+
+		code.append(new Inst3a(Inst3a.TAC.LABEL, faux, null, null));
+		return code;
+	}
+
 	/**
 	 * Generate code for a binary operation
 	 *
@@ -61,6 +96,24 @@ public class Code3aGenerator {
 		cod.append(genVar(temp));
 		cod.append(new Inst3a(op, temp, exp1.place, null));//op == TAC.NEG
 		return cod;
+	}
+
+
+/*
+ARG arg a
+CALL a = call b ou call b
+*/
+	public static Code3a callPrintS(LabelSymbol label) {
+		Code3a code = new Code3a(new Inst3a(Inst3a.TAC.LABEL, label, null, null));
+		code.append(new Code3a(new Inst3a(Inst3a.TAC.ARG, label, null, null)));
+		code.append(new Code3a(new Inst3a(Inst3a.TAC.CALL, null, SymbDistrib.builtinPrintS, null)));
+		return code;
+	}
+
+	public static Code3a callPrintN(Operand3a place) {
+		Code3a code = new Code3a(new Inst3a(Inst3a.TAC.ARG, place, null, null));
+		code.append(new Code3a(new Inst3a(Inst3a.TAC.CALL, null, SymbDistrib.builtinPrintN, null)));
+		return code;
 	}
 
 } // Code3aGenerator ***

@@ -1,13 +1,8 @@
 {
-  INT truc, bidule[10]
+  INT truc, bidule[10], machin
+  machin := 5
   truc := 153 / 10 * 5 + 3
   bidule[1] := 5 + 17
-
-  {
-    INT this0var0should0not0exist0outter0of0this0scope
-    truc := 10
-  }
-
-  this0var0should0not0exist0outter0of0this0scope := 0
-
+  truc := bidule[1] + 54
+  PRINT "Mon truc à une valeur de: ", truc, "\n"
 }
