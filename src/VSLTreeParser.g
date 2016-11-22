@@ -133,8 +133,12 @@ statement [SymbolTable symTab] returns [Code3a code]
         $code.append(Code3aGenerator.callRead(temp));
 
         Operand3a tab = symTab.lookup($IDENT.text);
+
+        if(tab == null)
+          Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
         $code.append($a.expAtt.code);
-        $code.append(new Code3a(new Inst3a(Inst3a.TAC.VARTAB, tab, $a.expAtt.place, temp)));
+        $code.append(new Inst3a(Inst3a.TAC.VARTAB, tab, $a.expAtt.place, temp));
       }
     ;
   /*
@@ -150,6 +154,10 @@ array_elem_assign [SymbolTable symTab, ExpAttribute valueToAssign] returns [Code
     : ^(ARELEM  IDENT a=expression[symTab])
       {
         Operand3a variable = symTab.lookup($IDENT.text);
+
+        if(variable == null)
+          Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
         $code = Code3aGenerator.assignVarTab(variable, $a.expAtt, valueToAssign);
       }
     ;
@@ -159,8 +167,12 @@ array_elem_value [SymbolTable symTab] returns [ExpAttribute expAtt]
       {
         VarSymbol temp = SymbDistrib.newTemp();
         Operand3a variable = symTab.lookup($IDENT.text);
+
+        if(variable == null)
+          Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
         Code3a code = Code3aGenerator.genVar(temp);
-        code.append(new Code3a(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place)));
+        code.append(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place));
         $expAtt = new ExpAttribute(variable.type, code, temp);
       }
     ;
@@ -214,6 +226,10 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
   | IDENT
     {
       Operand3a id = symTab.lookup($IDENT.text);
+
+      if(id == null)
+        Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
       expAtt = new ExpAttribute(id.type, new Code3a(), symTab.lookup($IDENT.text));
     }
   | a=array_elem_value[symTab]

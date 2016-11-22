@@ -1,7 +1,6 @@
 {
   INT truc, bidule[10], machin, i, t
   bidule[5] := 150
-  READ bidule[5]
-  t := bidule[5]
-  PRINT t+1
+  PRINT bidule[5]
+  PRINT ttoto
 }
