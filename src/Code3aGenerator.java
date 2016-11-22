@@ -37,14 +37,11 @@ public class Code3aGenerator {
 	public static Code3a genWhile(ExpAttribute cond, Code3a inst) {
 		LabelSymbol debut = SymbDistrib.newLabel();
 		LabelSymbol fin = SymbDistrib.newLabel();
-		Code3a code = new Code3a();
 
-		code.append(new Inst3a(Inst3a.TAC.LABEL, debut, null, null));
 
-		VarSymbol temp = SymbDistrib.newTemp();
-		code.append(Code3aGenerator.assignVar(temp, cond));
-
-		code.append(new Inst3a(Inst3a.TAC.IFZ, temp, fin, null));
+		Code3a code = new Code3a(new Inst3a(Inst3a.TAC.LABEL, debut, null, null));
+		code.append(cond.code);
+		code.append(new Inst3a(Inst3a.TAC.IFZ, cond.place, fin, null));
 
 		code.append(inst);
     code.append(new Inst3a(Inst3a.TAC.GOTO, debut, null, null));
@@ -56,11 +53,10 @@ public class Code3aGenerator {
 		LabelSymbol vrai = SymbDistrib.newLabel();
 		LabelSymbol faux = SymbDistrib.newLabel();
 
-		VarSymbol t1 = SymbDistrib.newTemp();
 
-		Code3a code = Code3aGenerator.assignVar(t1, cond);
+		Code3a code = cond.code;
 
-		code.append(new Inst3a(Inst3a.TAC.IFZ, t1, faux, null));
+		code.append(new Inst3a(Inst3a.TAC.IFZ, cond.place, faux, null));
 
 		code.append(then);
 		code.append(new Inst3a(Inst3a.TAC.GOTO, fin, null, null));
@@ -103,9 +99,9 @@ public class Code3aGenerator {
 ARG arg a
 CALL a = call b ou call b
 */
-	public static Code3a callPrintS(LabelSymbol label) {
-		Code3a code = new Code3a(new Inst3a(Inst3a.TAC.LABEL, label, null, null));
-		code.append(new Code3a(new Inst3a(Inst3a.TAC.ARG, label, null, null)));
+	public static Code3a callPrintS(Data3a data) {
+		Code3a code = new Code3a(new Inst3a(Inst3a.TAC.ARG, data.getLabel(), null, null));
+		code.appendData(data);
 		code.append(new Code3a(new Inst3a(Inst3a.TAC.CALL, null, SymbDistrib.builtinPrintS, null)));
 		return code;
 	}
@@ -116,4 +112,7 @@ CALL a = call b ou call b
 		return code;
 	}
 
+	public static Code3a callRead(Operand3a place) {
+		return new Code3a(new Inst3a(Inst3a.TAC.CALL, place, SymbDistrib.builtinRead, null));
+	}
 } // Code3aGenerator ***

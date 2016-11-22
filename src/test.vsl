@@ -1,8 +1,7 @@
 {
-  INT truc, bidule[10], machin
-  machin := 5
-  truc := 153 / 10 * 5 + 3
-  bidule[1] := 5 + 17
-  truc := bidule[1] + 54
-  PRINT "Mon truc à une valeur de: ", truc, "\n"
+  INT truc, bidule[10], machin, i, t
+  bidule[5] := 150
+  READ bidule[5]
+  t := bidule[5]
+  PRINT t+1
 }

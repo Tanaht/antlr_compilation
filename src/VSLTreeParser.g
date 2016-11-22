@@ -34,20 +34,16 @@ decl_item [SymbolTable symTab] returns [Code3a code]
     ;
 
 declaration [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
     : ^(DECL (a=decl_item[symTab] {
-        if($code == null)//decl_item peut-être présente 1 ou n fois, le if correspond au 1
-          $code = $a.code;
-        else//le else correspond au n
-          $code.append($a.code);
+        $code.append($a.code);
       })+)
     ;
 
 inst_list [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
     : ^(INST (a=statement[symTab] {
-        if($code == null)//statement peut-être présente 1 ou n fois, le if correspond au 1
-          $code = $a.code;
-        else//le else correspond au n
-          $code.append($a.code);
+        $code.append($a.code);
       })+)
     ;
 
@@ -66,6 +62,7 @@ block [SymbolTable symTab] returns [Code3a code]
     ;
 
 statement [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
   : ^(ASSIGN_KW a=expression[symTab] ( IDENT {
       //Assign Var
       Operand3a variable = symTab.lookup($IDENT.text);
@@ -76,52 +73,70 @@ statement [SymbolTable symTab] returns [Code3a code]
     }))
   | b=block[symTab]
     {
-      if($code == null)
-        $code = $b.code;
-      else
-        $code.append($b.code);
+      $code.append($b.code);
     }
   |  ^(PRINT_KW (z=print_item[symTab]
     {
-      if($code == null)
-        $code = $z.code;
-      else
-        $code.append($z.code);
+      $code.append($z.code);
+    })+)
+  | ^(READ_KW (j=read_item[symTab]
+    {
+      $code.append($j.code);
     })+)
   | ^(IF_KW e=expression[symTab]  s1=statement[symTab]
-	{
-    LabelSymbol fin = SymbDistrib.newLabel();
-		$code = Code3aGenerator.genIf($e.expAtt, $s1.code, fin);
+  	{
+      LabelSymbol fin = SymbDistrib.newLabel();
+  		$code = Code3aGenerator.genIf($e.expAtt, $s1.code, fin);
 
-	}
-	(s2=statement[symTab]
-	{
-		$code.append($s2.code);
-	})?
-	{
+  	}
+  	(s2=statement[symTab]
+  	{
+  		$code.append($s2.code);
+  	})?
+  	{
 
-		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
-	}
+  		$code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
+  	}
 	)
   | ^(WHILE_KW e=expression[symTab] s1=statement[symTab])
-	{
-		$code = Code3aGenerator.genWhile($e.expAtt, $s1.code);
+  	{
+  		$code = Code3aGenerator.genWhile($e.expAtt, $s1.code);
 
-	}
+  	}
   ;
 
   print_item [SymbolTable symTab] returns [Code3a code]
     : TEXT
       {
-        LabelSymbol label = new LabelSymbol($TEXT.text);
-        $code = Code3aGenerator.callPrintS(label);
+
+        Data3a data = new Data3a($TEXT.text);
+
+        $code = Code3aGenerator.callPrintS(data);
       }
     | a=expression[symTab]
       {
-        $code = Code3aGenerator.callPrintN($a.expAtt.place);
+        $code = $a.expAtt.code;
+        $code.append(Code3aGenerator.callPrintN($a.expAtt.place));
       }
     ;
 
+  read_item [SymbolTable symTab] returns [Code3a code]
+    :IDENT
+      {
+        Operand3a variable = symTab.lookup($IDENT.text);
+        $code = Code3aGenerator.callRead(variable);
+      }
+    | ^(ARELEM  IDENT a=expression[symTab])
+      {
+        VarSymbol temp = SymbDistrib.newTemp();
+        $code = Code3aGenerator.genVar(temp);
+        $code.append(Code3aGenerator.callRead(temp));
+
+        Operand3a tab = symTab.lookup($IDENT.text);
+        $code.append($a.expAtt.code);
+        $code.append(new Code3a(new Inst3a(Inst3a.TAC.VARTAB, tab, $a.expAtt.place, temp)));
+      }
+    ;
   /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
@@ -144,8 +159,8 @@ array_elem_value [SymbolTable symTab] returns [ExpAttribute expAtt]
       {
         VarSymbol temp = SymbDistrib.newTemp();
         Operand3a variable = symTab.lookup($IDENT.text);
-
-        Code3a code = new Code3a(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place));
+        Code3a code = Code3aGenerator.genVar(temp);
+        code.append(new Code3a(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place)));
         $expAtt = new ExpAttribute(variable.type, code, temp);
       }
     ;
