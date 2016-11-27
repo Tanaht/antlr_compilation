@@ -1,6 +1,7 @@
-{
-  INT truc, bidule[10], machin, i, t
-  bidule[5] := 150
-  PRINT bidule[5]
-  PRINT ttoto
+PROTO INT truc()
+FUNC VOID main(){
+	INT x
+	READ x
+	x := truc()
 }
+

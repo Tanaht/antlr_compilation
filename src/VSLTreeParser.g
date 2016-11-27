@@ -13,8 +13,66 @@ options {
 }
 
 s [SymbolTable symTab] returns [Code3a code]
-  : e=statement[symTab] { code = $e.code; }
+  : p=program[symTab]{$code = $p.code;}
   ;
+
+
+program [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
+    : ^(PROG (u=unit[symTab] {$code = $u.code ;} )+) 
+    ;
+
+
+unit [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
+    : f=function[symTab] {$code = $f.code; }
+    | p=proto[symTab]{$code = $p.code; }
+    ;
+
+function [SymbolTable symTab] returns [Code3a code]
+@init{ $code = new Code3a(); }
+    : ^(FUNC_KW t=type IDENT pl=param_list  ^(BODY s1=statement[symTab]))
+	{
+		LabelSymbol deb = new LabelSymbol($IDENT.text);
+		FunctionType ft = new FunctionType($t.type, false);
+		FunctionSymbol f = new FunctionSymbol(deb, ft);
+		symTab.insert($IDENT.text, f);
+		
+  		code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
+		$code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));		
+		$code.append($s1.code);
+		$code.append(new Inst3a(Inst3a.TAC.ENDFUNC, null, null, null));
+	}
+    ;
+
+proto [SymbolTable symTab]returns [Code3a code]
+@init{ $code = new Code3a(); }
+    : ^(PROTO_KW t=type IDENT pl=param_list)
+	{
+		LabelSymbol deb = new LabelSymbol($IDENT.text);
+		FunctionType ft = new FunctionType($t.type, true);
+		
+
+		FunctionSymbol f = new FunctionSymbol(deb, ft);
+		symTab.insert($IDENT.text, f);
+	}
+    ;
+
+type returns [Type type]
+    : INT_KW {$type = Type.INT;}
+    | VOID_KW {$type = Type.VOID;}
+    ;
+
+param_list
+    : ^(PARAM param*)
+    | PARAM
+    ;
+
+param
+    : IDENT
+    | ^(ARRAY IDENT)
+    ;
+
 
 decl_item [SymbolTable symTab] returns [Code3a code]
     : IDENT//Variable Declaration
@@ -85,7 +143,7 @@ statement [SymbolTable symTab] returns [Code3a code]
     })+)
   | ^(IF_KW e=expression[symTab]  s1=statement[symTab]
   	{
-      LabelSymbol fin = SymbDistrib.newLabel();
+      	LabelSymbol fin = SymbDistrib.newLabel();
   		$code = Code3aGenerator.genIf($e.expAtt, $s1.code, fin);
 
   	}
@@ -103,7 +161,19 @@ statement [SymbolTable symTab] returns [Code3a code]
   		$code = Code3aGenerator.genWhile($e.expAtt, $s1.code);
 
   	}
-  ;
+| ^(FCALL_S IDENT (argument_list[symTab])?)
+	{
+		Operand3a op = symTab.lookup($IDENT.text);
+		
+		if (TypeCheck.checkFunc(op) != Type.ERROR){
+			LabelSymbol l = ((FunctionSymbol) op).label;
+			$code.append(new Inst3a(Inst3a.TAC.CALL, null, l, null));
+		}else {
+			Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+		}	
+		
+	}
+    ;
 
   print_item [SymbolTable symTab] returns [Code3a code]
     : TEXT
@@ -120,7 +190,7 @@ statement [SymbolTable symTab] returns [Code3a code]
       }
     ;
 
-  read_item [SymbolTable symTab] returns [Code3a code]
+read_item [SymbolTable symTab] returns [Code3a code]
     :IDENT
       {
         Operand3a variable = symTab.lookup($IDENT.text);
@@ -140,13 +210,13 @@ statement [SymbolTable symTab] returns [Code3a code]
         $code.append($a.expAtt.code);
         $code.append(new Inst3a(Inst3a.TAC.VARTAB, tab, $a.expAtt.place, temp));
       }
+ 
     ;
   /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
   | READ_KW^ read_list
-  | WHILE_KW^ expression DO_KW! statement OD_KW!
-  | ^(FCALL_S IDENT argument_list?)
+  | 
   | block*/
 
 
@@ -236,4 +306,23 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
     {
       $expAtt = $a.expAtt;
     }
+  |^(FCALL IDENT (argument_list[symTab])?)
+	{
+		Operand3a op = symTab.lookup($IDENT.text);
+		Type t = TypeCheck.checkFunc(op);
+		if (t == Type.INT){
+			VarSymbol temp = SymbDistrib.newTemp();
+        		Code3a code = Code3aGenerator.genVar(temp);
+			code.append(new Inst3a(Inst3a.TAC.CALL,temp,op,null));
+			$expAtt = new ExpAttribute(t, code, temp);
+		}
+			
+	}
   ;
+
+
+argument_list [SymbolTable symTab]
+    : expression[symTab] (expression[symTab])*
+    ;
+
+

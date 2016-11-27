@@ -44,7 +44,7 @@ public class Code3aGenerator {
 		code.append(new Inst3a(Inst3a.TAC.IFZ, cond.place, fin, null));
 
 		code.append(inst);
-    code.append(new Inst3a(Inst3a.TAC.GOTO, debut, null, null));
+    		code.append(new Inst3a(Inst3a.TAC.GOTO, debut, null, null));
 		code.append(new Inst3a(Inst3a.TAC.LABEL, fin, null, null));
 		return code;
 	}

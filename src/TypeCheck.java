@@ -17,5 +17,12 @@ public class TypeCheck {
 			return Type.ERROR;
 		}
 	}
+
+	public static Type checkFunc(Operand3a op){
+		if(op instanceof FunctionSymbol){
+			return ((FunctionType) op.type).getReturnType();
+		}
+		return Type.ERROR;		
+	}
 	
 }
