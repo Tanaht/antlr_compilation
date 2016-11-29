@@ -19,7 +19,7 @@ s [SymbolTable symTab] returns [Code3a code]
 
 program [SymbolTable symTab] returns [Code3a code]
 @init{ $code = new Code3a(); }
-    : ^(PROG (u=unit[symTab] {$code = $u.code ;} )+) 
+    : ^(PROG (u=unit[symTab] {$code.append($u.code); } )+)
     ;
 
 
@@ -34,12 +34,24 @@ function [SymbolTable symTab] returns [Code3a code]
     : ^(FUNC_KW t=type IDENT pl=param_list  ^(BODY s1=statement[symTab]))
 	{
 		LabelSymbol deb = new LabelSymbol($IDENT.text);
-		FunctionType ft = new FunctionType($t.type, false);
-		FunctionSymbol f = new FunctionSymbol(deb, ft);
-		symTab.insert($IDENT.text, f);
-		
-  		code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
-		$code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));		
+
+    Operand3a op = symTab.lookup($IDENT.text);
+    FunctionSymbol f = null;
+    if(op != null && op instanceof FunctionSymbol) {
+      f = (FunctionSymbol) op;
+      ((FunctionType) f.type).prototype = false;
+    }
+		else {
+      FunctionType ft = new FunctionType($t.type, false);
+      for(Type type : $pl.types) {
+          ft.extend(type);
+      }
+      f = new FunctionSymbol(deb, ft);
+      symTab.insert($IDENT.text, f);
+    }
+
+  	$code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
+		$code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));
 		$code.append($s1.code);
 		$code.append(new Inst3a(Inst3a.TAC.ENDFUNC, null, null, null));
 	}
@@ -51,7 +63,9 @@ proto [SymbolTable symTab]returns [Code3a code]
 	{
 		LabelSymbol deb = new LabelSymbol($IDENT.text);
 		FunctionType ft = new FunctionType($t.type, true);
-		
+    for(Type type : $pl.types) {
+        ft.extend(type);
+    }
 
 		FunctionSymbol f = new FunctionSymbol(deb, ft);
 		symTab.insert($IDENT.text, f);
@@ -63,14 +77,15 @@ type returns [Type type]
     | VOID_KW {$type = Type.VOID;}
     ;
 
-param_list
-    : ^(PARAM param*)
-    | PARAM
+param_list returns [ArrayList<Type> types]
+@init { $types = new ArrayList<Type>(); }
+    : ^(PARAM (param { $types.add($param.type); })*)
+  | PARAM { /*$types.add(Type.VOID);*/ }
     ;
 
-param
-    : IDENT
-    | ^(ARRAY IDENT)
+param returns [Type type]
+    : IDENT {$type = Type.INT ;}
+    | ^(ARRAY IDENT) {$type = Type.POINTER; }
     ;
 
 
@@ -161,17 +176,41 @@ statement [SymbolTable symTab] returns [Code3a code]
   		$code = Code3aGenerator.genWhile($e.expAtt, $s1.code);
 
   	}
-| ^(FCALL_S IDENT (argument_list[symTab])?)
+| ^(FCALL_S IDENT {
+  int numArg = 0;
+  Operand3a op = symTab.lookup($IDENT.text);
+  Type typeFun = TypeCheck.checkFunc(op);
+  FunctionSymbol f = null;
+  if(typeFun != Type.ERROR)
+    f = (FunctionSymbol) op;
+  else {
+    Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+  }
+
+  List<Type> args = ((FunctionType) f.type).getArguments();
+  } (arg=argument_item[symTab] {
+
+    if(args.get(numArg) != $arg.expAtt.type)
+      Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
+
+    /*if(args.get(numArg) == Type.POINTER) {
+        VarSymbol temp = SymbDistrib.newTemp();
+        $code.append(Code3aGenerator.genVar(temp));
+        $code.append(new Inst3a(Inst3a.TAC.TABVAR, temp, $arg.expAtt.place, new ConstSymbol(0)));
+        $code.append(new Inst3a(Inst3a.TAC.ARG, temp, null, null));
+    }
+    else {*/
+        $code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
+    //}
+
+    numArg++;
+  })*)
 	{
-		Operand3a op = symTab.lookup($IDENT.text);
-		
-		if (TypeCheck.checkFunc(op) != Type.ERROR){
-			LabelSymbol l = ((FunctionSymbol) op).label;
-			$code.append(new Inst3a(Inst3a.TAC.CALL, null, l, null));
-		}else {
-			Errors.unknownIdentifier($IDENT, $IDENT.text, null);
-		}	
-		
+
+		//if (typeFun != Type.ERROR){
+			$code.append(new Inst3a(Inst3a.TAC.CALL, null, op, null));
+    //}
+
 	}
     ;
 
@@ -210,13 +249,13 @@ read_item [SymbolTable symTab] returns [Code3a code]
         $code.append($a.expAtt.code);
         $code.append(new Inst3a(Inst3a.TAC.VARTAB, tab, $a.expAtt.place, temp));
       }
- 
+
     ;
   /*
   | RETURN_KW^ expression
   | PRINT_KW^ print_list
   | READ_KW^ read_list
-  | 
+  |
   | block*/
 
 
@@ -306,23 +345,53 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
     {
       $expAtt = $a.expAtt;
     }
-  |^(FCALL IDENT (argument_list[symTab])?)
+  |^(FCALL IDENT {
+    int numArg = 0;
+    Operand3a op = symTab.lookup($IDENT.text);
+    Type typeFun = TypeCheck.checkFunc(op);
+    FunctionSymbol f = null;
+    if(typeFun == Type.ERROR)
+      Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
+    if(typeFun != Type.INT)
+      Errors.incompatibleTypes($IDENT, Type.INT, typeFun, "");
+
+    VarSymbol temp = SymbDistrib.newTemp();
+    f = (FunctionSymbol) op;
+
+    List<Type> args = ((FunctionType) f.type).getArguments();
+
+    Code3a code = Code3aGenerator.genVar(temp);
+
+    } (arg=argument_item[symTab] {
+      System.err.println("La taille des arguments: " + args.size() + " pour la fonction: " + $IDENT.text);
+
+      if(args.get(numArg) != $arg.expAtt.type)
+        Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
+
+      /*if(args.get(numArg) == Type.POINTER) {
+          VarSymbol temp2 = SymbDistrib.newTemp();
+          code.append(Code3aGenerator.genVar(temp2));
+          code.append(new Inst3a(Inst3a.TAC.TABVAR, temp2, $arg.expAtt.place, new ConstSymbol(0)));
+          code.append(new Inst3a(Inst3a.TAC.ARG, temp2, null, null));
+      }
+      else {*/
+          code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
+      //}
+
+      numArg++;
+
+    })*)
 	{
-		Operand3a op = symTab.lookup($IDENT.text);
-		Type t = TypeCheck.checkFunc(op);
-		if (t == Type.INT){
-			VarSymbol temp = SymbDistrib.newTemp();
-        		Code3a code = Code3aGenerator.genVar(temp);
+		if (typeFun == Type.INT){
 			code.append(new Inst3a(Inst3a.TAC.CALL,temp,op,null));
-			$expAtt = new ExpAttribute(t, code, temp);
+			$expAtt = new ExpAttribute(Type.INT, code, temp);
 		}
-			
+
 	}
   ;
 
 
-argument_list [SymbolTable symTab]
-    : expression[symTab] (expression[symTab])*
+argument_item [SymbolTable symTab] returns [ExpAttribute expAtt]
+    : a=expression[symTab] { $expAtt = $a.expAtt; }
     ;
-
-

@@ -22,7 +22,19 @@ public class TypeCheck {
 		if(op instanceof FunctionSymbol){
 			return ((FunctionType) op.type).getReturnType();
 		}
-		return Type.ERROR;		
+		return Type.ERROR;
 	}
-	
+
+	public static Type checkArg(Type expected, Operand3a op) {
+		switch(expected) {
+			case Type.INT:
+				return op.type == Type.INT;
+			break;
+			case Type.POINTER:
+				return 
+			break;
+		}
+		return Type.ERROR;
+	}
+
 }
