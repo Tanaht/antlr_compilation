@@ -24,7 +24,8 @@ public class TypeCheck {
 		}
 		return Type.ERROR;
 	}
-
+	
+/*
 	public static Type checkArg(Type expected, Operand3a op) {
 		switch(expected) {
 			case Type.INT:
@@ -36,5 +37,5 @@ public class TypeCheck {
 		}
 		return Type.ERROR;
 	}
-
+*/
 }

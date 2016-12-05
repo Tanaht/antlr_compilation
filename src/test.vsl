@@ -1,12 +1,15 @@
-PROTO INT truc(k, t[])
+PROTO INT truc(x,t[])
 FUNC VOID main(){
-	INT x, d[3]
+	INT x, d[3],y
+	y:=1
 	d[0] := 1
 	READ x
-	x := truc(x, d)
+	truc(x,d)
 }
 
-FUNC INT truc(k, t[]){
-
-	PRINT "Coucou \n"
+FUNC INT truc(e,t[],n){
+	INT y
+	READ y
+	RETURN y+1
 }
+
