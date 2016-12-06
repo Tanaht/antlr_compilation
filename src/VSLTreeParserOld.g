@@ -32,21 +32,56 @@ unit [SymbolTable symTab] returns [Code3a code]
 function [SymbolTable symTab] returns [Code3a code]
 @init{ $code = new Code3a(); symTab.enterScope(); }
 @after{ symTab.leaveScope(); }
-    : ^(FUNC_KW t=type IDENT ^(PARAM (ax=param {System.out.println($ax.type);} )*)  ^(BODY s1=statement[symTab]))
+    : ^(FUNC_KW t=type IDENT pl=param_list  ^(BODY s1=statement[symTab]))
 	{
+		LabelSymbol deb = new LabelSymbol($IDENT.text);
+
+		Operand3a op = symTab.lookup($IDENT.text);
+		FunctionSymbol f = null;
+    List<Type> argList = ((FunctionType) f.type).getArguments();
+    ArrayList<Type> paramList = $pl.types;
+    System.err.print("Nombre de params: ");
+    System.err.println(paramList.size());
+
+		if(op != null && op instanceof FunctionSymbol) {
+		  f = (FunctionSymbol) op;
+		  if(((FunctionType) f.type).prototype == false)
+			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
+
+
+
+		if(argList.size() != paramList.size())
+			Errors.miscError($IDENT, "Definition differente du prototype");
+
+		for(int i=0; i < argList.size(); i++){
+
+					if(argList.get(i) != paramList.get(i))
+						Errors.incompatibleTypes($IDENT, argList.get(i), paramList.get(i), "Pour le " + i + " arguments de la fonction");
+
+		}
+
+		  ((FunctionType) f.type).prototype = false;
+		}
+		else {
+		  FunctionType ft = new FunctionType($t.type, false);
+		  for(Type type : $pl.types) {
+			  ft.extend(type);
+		  }
+		  f = new FunctionSymbol(deb, ft);
+		  symTab.insert($IDENT.text, f);
+		}
+
+		$code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
+		$code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));
+    //déclaration des variables
+    System.err.print("Nombre de params: ");
+    System.err.println(paramList.size());
+
+    symTab.print();
+		$code.append($s1.code);
+		$code.append(new Inst3a(Inst3a.TAC.ENDFUNC, null, null, null));
 	}
     ;
-
-param_list returns [ArrayList<Type> types]
-@init { $types = new ArrayList<Type>(); }//TODO: Changer les variables synthétisé par la suite
-    : ^(PARAM (param { $types.add($param.type); System.out.println("Taille: " + $types.size()); })*)
-    ;
-
-param returns [Type type]
-    : IDENT {$type = Type.INT ; }
-    | ^(ARRAY IDENT) {$type = Type.POINTER; }
-    ;
-
 
 proto [SymbolTable symTab]returns [Code3a code]
 @init{ $code = new Code3a(); }
@@ -70,6 +105,17 @@ type returns [Type type]
     : INT_KW {$type = Type.INT;}
     | VOID_KW {$type = Type.VOID;}
     ;
+
+param_list returns [ArrayList<Type> types]
+@init { $types = new ArrayList<Type>(); }//TODO: Changer les variables synthétisé par la suite
+    : ^(PARAM (param { $types.add($param.type); System.out.println("Taille: " + $types.size()); })*)
+    ;
+
+param returns [Type type]
+    : IDENT {$type = Type.INT ; }
+    | ^(ARRAY IDENT) {$type = Type.POINTER; }
+    ;
+
 
 decl_item [SymbolTable symTab] returns [Code3a code]
     : IDENT//Variable Declaration
