@@ -113,7 +113,7 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 	/**
 	 * This method generates code for a whole three address code fragment. The
 	 * resulting assembly code is emitted on the data output stream.
-	 * 
+	 *
 	 * @param c
 	 *            : Code 3a to be translated
 	 */
@@ -150,7 +150,7 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 	 * words, acts as if the given code had been written inside of the main
 	 * function. To be used until functions are implemented in the VSL+
 	 * compiler.
-	 * 
+	 *
 	 * @param c
 	 *            code to be inserted as the body of the main function.
 	 * @return a new code with the surrounding instructions to encapsulate it in
@@ -174,7 +174,7 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 	/**
 	 * This method generates code for a simple instruction. The resulting
 	 * assembly code is emitted on the data output stream.
-	 * 
+	 *
 	 * @param inst
 	 */
 	private void genCodeMIPS(Inst3a inst) throws IOException {
@@ -564,7 +564,7 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 
 	/**
 	 * generate code for unary neg operator a := - b.
-	 * 
+	 *
 	 * MIPS: neg $dest,$src
 	 */
 	private void cg_negMIPS(Operand3a a, Operand3a b) {
@@ -585,7 +585,7 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 	 * Generate code for a copy instruction a := b We load b into an register,
 	 * then update the descriptors to indicate that a is also in that register.
 	 * We need not do the store until the register is spilled or flushed.
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 */
@@ -699,39 +699,40 @@ public class MIPSCodeGenerator implements MIPSCGConstants {
 	/**
 	 * This routine is used to create the constant area in memory
 	 */
-	private void cg_constMIPS(List<Data3a> suite) {
-		Data3a courant;
-		String t;
-		int i;
+	 private void cg_constMIPS(List<Data3a> suite) {
+	 		Data3a courant;
+	 		String t;
+	 		int i;
 
-		for (int ic = 0; ic < suite.size(); ic++) {
-			courant = suite.get(ic);
-			out.println(R_INDENT + ".align 2");
-			out.println(courant.getLabel() + ":"); // the label of the string
-			t = courant.getText(); // the text
+	 		for (int ic = 0; ic < suite.size(); ic++) {
+	 			courant = suite.get(ic);
+	 			out.println(R_INDENT + ".align 2");
+	 			out.println(courant.getLabel() + ":"); // the label of the string
+	 			t = courant.getText(); // the text
 
-			out.print(R_INDENT + ".ascii\t\"");
+	 			out.print(R_INDENT + ".ascii\t");
 
-			for (i = 0; i < t.length(); i++) {
-				if (t.charAt(i) == '\\') {
-					i++;
-					switch (t.charAt(i)) {
-					case 'n':
-						out.print("\\012");
-						break;
-					case 't':
-						out.print("\\011");
-						break;
-					case '\"':
-						out.print("\"");
-						break;
-					}
-				} else {
-					out.print(t.charAt(i));
-				}
-			}
-			out.println("\\000\"");
+	 			for (i = 0; i < t.length()-1; i++) {
+	 				if (t.charAt(i) == '\\') {
+	 					i++;
+	 					switch (t.charAt(i)) {
+	 					case 'n':
+	 						out.print("\\012");
+	 						break;
+	 					case 't':
+	 						out.print("\\011");
+	 						break;
+	 					case '\"':
+	 						out.print("\"");
+	 						break;
+	 					}
+	 				} else {
+	 					out.print(t.charAt(i));
+	 				}
+	 			}
 
-		}
-	}
+	 			out.println("\\000\"");
+
+	 		}
+	 	}
 }

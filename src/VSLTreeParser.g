@@ -32,14 +32,12 @@ unit [SymbolTable symTab] returns [Code3a code]
 function [SymbolTable symTab] returns [Code3a code]
 @init{
   $code = new Code3a();
-  symTab.enterScope();
   ArrayList<Type> paramsType = new ArrayList<Type>();
   ArrayList<String> paramsNom = new ArrayList<String>();
 }
 @after{ symTab.leaveScope(); }
     : ^(FUNC_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); paramsNom.add($pa.nom); } )*) {
 
-      System.out.println("Déclarations fonction: " + $IDENT.text);
       LabelSymbol deb = new LabelSymbol($IDENT.text);
       Operand3a storedFunction = symTab.lookup($IDENT.text);
       FunctionSymbol f = null;
@@ -57,7 +55,7 @@ function [SymbolTable symTab] returns [Code3a code]
 
         for(int i=0; i < argList.size(); i++) {
           if(argList.get(i) != paramsType.get(i))
-            Errors.incompatibleTypes($IDENT, argList.get(i), paramsType.get(i), "Pour le " + i + " arguments de la fonction");
+            Errors.incompatibleTypes($IDENT, argList.get(i), paramsType.get(i), "Pour le " + i + " arguments de la fonction "+$IDENT.text);
         }
 
 
@@ -71,27 +69,21 @@ function [SymbolTable symTab] returns [Code3a code]
         f = new FunctionSymbol(deb, ft);
         symTab.insert($IDENT.text, f);
       }
-
       $code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
       $code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));
       //déclaration des variables
-      System.out.println("List params: " + paramsType.size());
+      symTab.enterScope();
       for(int i=0; i < paramsType.size(); i++) {
         VarSymbol var = new VarSymbol(paramsType.get(i), paramsNom.get(i), symTab.getScope());
-
+        var.setParam();
         symTab.insert(paramsNom.get(i), var);
-
         $code.append(Code3aGenerator.genVar(var));
       }
 
       }  ^(BODY s1=statement[symTab]))
 	{
-    System.out.println("Symtab:");
-    symTab.print();
-    System.out.println("Avant erreurs");
 		$code.append($s1.code);
 		$code.append(new Inst3a(Inst3a.TAC.ENDFUNC, null, null, null));
-    System.out.println("Fin Déclarations fonction: " + $IDENT.text);
 	}
     ;
 
@@ -105,7 +97,8 @@ proto [SymbolTable symTab]returns [Code3a code]
 @init{ $code = new Code3a(); ArrayList<Type> paramsType = new ArrayList<Type>(); }
     : ^(PROTO_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); })*))
 	{
-		if(symTab.lookup($IDENT.text)!= null){
+    Operand3a v = symTab.lookup($IDENT.text);
+		if(v!= null && v.getScope() == symTab.getScope()){
 			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 		}
 		LabelSymbol deb = new LabelSymbol($IDENT.text);
@@ -127,8 +120,9 @@ type returns [Type type]
 decl_item [SymbolTable symTab] returns [Code3a code]
     : IDENT//Variable Declaration
       {
-		if(symTab.lookup($IDENT.text)!= null){
-			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
+        Operand3a v = symTab.lookup($IDENT.text);
+    		if(v!= null && v.getScope() == symTab.getScope()){
+			       Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 		}
         Operand3a var = new VarSymbol(Type.INT, $IDENT.text, $symTab.getScope());
         symTab.insert($IDENT.text, var);
@@ -136,8 +130,9 @@ decl_item [SymbolTable symTab] returns [Code3a code]
       }
     | ^(ARDECL IDENT INTEGER)//Array Declaration
       {
-		if(symTab.lookup($IDENT.text)!= null){
-			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
+        Operand3a v = symTab.lookup($IDENT.text);
+    		if(v!= null && v.getScope() == symTab.getScope()){
+			       Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 		}
         Operand3a var = new VarSymbol(new ArrayType(Type.INT, Integer.parseInt($INTEGER.text)), $IDENT.text, $symTab.getScope());
         symTab.insert($IDENT.text, var);
@@ -230,14 +225,14 @@ statement [SymbolTable symTab] returns [Code3a code]
   } (arg=argument_item[symTab] {
 
 
-	if(args.get(numArg) == Type.POINTER){
+	/*if(args.get(numArg) == Type.POINTER){
 		if(!($arg.expAtt.type instanceof ArrayType))
-			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
+			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
 	}
   else{
 		if(args.get(numArg) != $arg.expAtt.type)
-			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
-	}
+			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
+	}*/
     $code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
 
     numArg++;
@@ -251,7 +246,6 @@ statement [SymbolTable symTab] returns [Code3a code]
 	}
 	|^(RETURN_KW exp=expression[symTab])
 		{
-      System.out.println("RETURN");
 			$code.append(exp.code);
 			$code.append(new Inst3a(Inst3a.TAC.RETURN,exp.place,null,null));
 		}
@@ -374,7 +368,6 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
       Operand3a id = symTab.lookup($IDENT.text);
 
       if(id == null) {
-        symTab.print();
         Errors.unknownIdentifier($IDENT, $IDENT.text, null);
       }
       expAtt = new ExpAttribute(id.type, new Code3a(), symTab.lookup($IDENT.text));
@@ -383,49 +376,38 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
     {
       $expAtt = $a.expAtt;
     }
-  |^(FCALL IDENT {
-    int numArg = 0;
-    Operand3a op = symTab.lookup($IDENT.text);
-    Type typeFun = TypeCheck.checkFunc(op);
-    FunctionSymbol f = null;
-    if(typeFun == Type.ERROR)
-      Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+  |^(FCALL IDENT
+    {
+      int numArg = 0;
+      Operand3a op = symTab.lookup($IDENT.text);
+      Type typeFun = TypeCheck.checkFunc(op);
+      FunctionSymbol f = null;
+      if(typeFun == Type.ERROR)
+        Errors.unknownIdentifier($IDENT, $IDENT.text, null);
 
-    if(typeFun != Type.INT)
-      Errors.incompatibleTypes($IDENT, Type.INT, typeFun, "");
+      if(typeFun != Type.INT)
+        Errors.incompatibleTypes($IDENT, Type.INT, typeFun, "fonction "+$IDENT.text);
 
-    VarSymbol temp = SymbDistrib.newTemp();
-    f = (FunctionSymbol) op;
-
-    List<Type> args = ((FunctionType) f.type).getArguments();
-
-    Code3a code = Code3aGenerator.genVar(temp);
-
-    } (arg=argument_item[symTab] {
-      //System.err.println("La taille des arguments: " + args.size() + " pour la fonction: " + $IDENT.text);
-
-      if(args.get(numArg) != $arg.expAtt.type)
-        Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
-
-      /*if(args.get(numArg) == Type.POINTER) {
-          VarSymbol temp2 = SymbDistrib.newTemp();
-          code.append(Code3aGenerator.genVar(temp2));
-          code.append(new Inst3a(Inst3a.TAC.TABVAR, temp2, $arg.expAtt.place, new ConstSymbol(0)));
-          code.append(new Inst3a(Inst3a.TAC.ARG, temp2, null, null));
-      }
-      else {*/
-          code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
-      //}
-
+      VarSymbol temp = SymbDistrib.newTemp();
+      f = (FunctionSymbol) op;
+      List<Type> args = ((FunctionType) f.type).getArguments();
+      Code3a code = Code3aGenerator.genVar(temp);
+    }
+    (arg=argument_item[symTab]
+    {
+      /*if(args.get(numArg) != $arg.expAtt.type)
+        Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
+*/
+      code.append($arg.expAtt.code);
+      code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
       numArg++;
-
     })*)
 	{
-		if (typeFun == Type.INT){
+		if (typeFun == Type.INT)
+    {
 			code.append(new Inst3a(Inst3a.TAC.CALL,temp,op,null));
 			$expAtt = new ExpAttribute(Type.INT, code, temp);
 		}
-
 	}
   ;
 
