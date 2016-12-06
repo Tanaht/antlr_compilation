@@ -31,31 +31,67 @@ unit [SymbolTable symTab] returns [Code3a code]
 
 function [SymbolTable symTab] returns [Code3a code]
 @init{
-  $code = new Code3a(); symTab.enterScope();
+  $code = new Code3a();
+  symTab.enterScope();
   ArrayList<Type> paramsType = new ArrayList<Type>();
   ArrayList<String> paramsNom = new ArrayList<String>();
 }
 @after{ symTab.leaveScope(); }
-    : ^(FUNC_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); paramsNom.add($pa.nom); } )*)  ^(BODY s1=statement[symTab]))
+    : ^(FUNC_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); paramsNom.add($pa.nom); } )*) {
+
+      System.out.println("Déclarations fonction: " + $IDENT.text);
+      LabelSymbol deb = new LabelSymbol($IDENT.text);
+      Operand3a storedFunction = symTab.lookup($IDENT.text);
+      FunctionSymbol f = null;
+
+      //Si Fonction auparavant défini comme prototype
+      if(storedFunction != null && storedFunction instanceof FunctionSymbol) {
+        f = (FunctionSymbol) storedFunction;
+        List<Type> argList = ((FunctionType) f.type).getArguments();
+
+        if(((FunctionType) f.type).prototype == false)
+           Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
+
+        if(argList.size() != paramsType.size())
+          Errors.miscError($IDENT, "Definition differente du prototype");
+
+        for(int i=0; i < argList.size(); i++) {
+          if(argList.get(i) != paramsType.get(i))
+            Errors.incompatibleTypes($IDENT, argList.get(i), paramsType.get(i), "Pour le " + i + " arguments de la fonction");
+        }
+
+
+        ((FunctionType) f.type).prototype = false;
+      }
+      else {//Si aucun prototype
+        FunctionType ft = new FunctionType($t.type, false);
+        for(Type type : paramsType) {
+          ft.extend(type);
+        }
+        f = new FunctionSymbol(deb, ft);
+        symTab.insert($IDENT.text, f);
+      }
+
+      $code.append(new Inst3a(Inst3a.TAC.LABEL, deb, null, null));
+      $code.append(new Inst3a(Inst3a.TAC.BEGINFUNC, null, null, null));
+      //déclaration des variables
+      System.out.println("List params: " + paramsType.size());
+      for(int i=0; i < paramsType.size(); i++) {
+        VarSymbol var = new VarSymbol(paramsType.get(i), paramsNom.get(i), symTab.getScope());
+
+        symTab.insert(paramsNom.get(i), var);
+
+        $code.append(Code3aGenerator.genVar(var));
+      }
+
+      }  ^(BODY s1=statement[symTab]))
 	{
-    LabelSymbol deb = new LabelSymbol($IDENT.text);
-    Operand3a op = symTab.lookup($IDENT.text);
-		FunctionSymbol f = null;
-    List<Type> argList = ((FunctionType) f.type).getArguments();
-    if(op != null && op instanceof FunctionSymbol) {
-		  f = (FunctionSymbol) op;
-		  if(((FunctionType) f.type).prototype == false)
-			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
-
-      if(argList.size() != paramList.size())
-  		  Errors.miscError($IDENT, "Definition differente du prototype");
-
-  		for(int i=0; i < argList.size(); i++) {
-  			if(argList.get(i) != paramList.get(i))
-  				Errors.incompatibleTypes($IDENT, argList.get(i), paramList.get(i), "Pour le " + i + " arguments de la fonction");
-  		}
-    }
-
+    System.out.println("Symtab:");
+    symTab.print();
+    System.out.println("Avant erreurs");
+		$code.append($s1.code);
+		$code.append(new Inst3a(Inst3a.TAC.ENDFUNC, null, null, null));
+    System.out.println("Fin Déclarations fonction: " + $IDENT.text);
 	}
     ;
 
@@ -197,7 +233,8 @@ statement [SymbolTable symTab] returns [Code3a code]
 	if(args.get(numArg) == Type.POINTER){
 		if(!($arg.expAtt.type instanceof ArrayType))
 			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
-	}else{
+	}
+  else{
 		if(args.get(numArg) != $arg.expAtt.type)
 			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction");
 	}
@@ -214,6 +251,7 @@ statement [SymbolTable symTab] returns [Code3a code]
 	}
 	|^(RETURN_KW exp=expression[symTab])
 		{
+      System.out.println("RETURN");
 			$code.append(exp.code);
 			$code.append(new Inst3a(Inst3a.TAC.RETURN,exp.place,null,null));
 		}
