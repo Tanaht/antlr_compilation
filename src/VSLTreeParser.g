@@ -30,34 +30,51 @@ unit [SymbolTable symTab] returns [Code3a code]
     ;
 
 function [SymbolTable symTab] returns [Code3a code]
-@init{ $code = new Code3a(); symTab.enterScope(); }
+@init{
+  $code = new Code3a(); symTab.enterScope();
+  ArrayList<Type> paramsType = new ArrayList<Type>();
+  ArrayList<String> paramsNom = new ArrayList<String>();
+}
 @after{ symTab.leaveScope(); }
-    : ^(FUNC_KW t=type IDENT ^(PARAM (ax=param {System.out.println($ax.type);} )*)  ^(BODY s1=statement[symTab]))
+    : ^(FUNC_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); paramsNom.add($pa.nom); } )*)  ^(BODY s1=statement[symTab]))
 	{
+    LabelSymbol deb = new LabelSymbol($IDENT.text);
+    Operand3a op = symTab.lookup($IDENT.text);
+		FunctionSymbol f = null;
+    List<Type> argList = ((FunctionType) f.type).getArguments();
+    if(op != null && op instanceof FunctionSymbol) {
+		  f = (FunctionSymbol) op;
+		  if(((FunctionType) f.type).prototype == false)
+			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
+
+      if(argList.size() != paramList.size())
+  		  Errors.miscError($IDENT, "Definition differente du prototype");
+
+  		for(int i=0; i < argList.size(); i++) {
+  			if(argList.get(i) != paramList.get(i))
+  				Errors.incompatibleTypes($IDENT, argList.get(i), paramList.get(i), "Pour le " + i + " arguments de la fonction");
+  		}
+    }
+
 	}
     ;
 
-param_list returns [ArrayList<Type> types]
-@init { $types = new ArrayList<Type>(); }//TODO: Changer les variables synthétisé par la suite
-    : ^(PARAM (param { $types.add($param.type); System.out.println("Taille: " + $types.size()); })*)
-    ;
-
-param returns [Type type]
-    : IDENT {$type = Type.INT ; }
-    | ^(ARRAY IDENT) {$type = Type.POINTER; }
+param returns [Type type, String nom]
+    : IDENT {$type = Type.INT; $nom = $IDENT.text; }
+    | ^(ARRAY IDENT) {$type = Type.POINTER; $nom = $IDENT.text; }
     ;
 
 
 proto [SymbolTable symTab]returns [Code3a code]
-@init{ $code = new Code3a(); }
-    : ^(PROTO_KW t=type IDENT pl=param_list)
+@init{ $code = new Code3a(); ArrayList<Type> paramsType = new ArrayList<Type>(); }
+    : ^(PROTO_KW t=type IDENT ^(PARAM (pa=param { paramsType.add($pa.type); })*))
 	{
 		if(symTab.lookup($IDENT.text)!= null){
 			Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 		}
 		LabelSymbol deb = new LabelSymbol($IDENT.text);
 		FunctionType ft = new FunctionType($t.type, true);
-		for(Type type : $pl.types) {
+		for(Type type : paramsType) {
 			ft.extend(type);
 		}
 

@@ -1,15 +1,4 @@
-PROTO INT truc(x,t[])
-FUNC VOID main(){
-	INT x, d[3],y
-	y:=1
-	d[0] := 1
-	READ x
-	truc(x,d)
-}
+PROTO INT plus(x,y)
+FUNC VOID main() PRINT "1+3 = " ,plus(1,3)
 
-FUNC INT truc(e,t[],n){
-	INT y
-	READ y
-	RETURN y+1
-}
-
+FUNC INT plus(x,y) RETURN x+y
