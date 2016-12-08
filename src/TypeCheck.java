@@ -30,7 +30,7 @@ public class TypeCheck {
 	*/
 	public static boolean checkType(Type expected, Type type) {
 		if (expected == Type.INT)
-				return type == Type.INT || type == Type.POINTER;
+				return type == Type.INT;
 
  		return type == Type.POINTER || type instanceof ArrayType;
 	}
