@@ -204,7 +204,7 @@ L17:
 	.globl naivesort
 	.ent naivesort
 naivesort:
-	 addiu	$sp,$sp,-64
+	 addiu	$sp,$sp,-68
 	 sw	$31,16($29)
 # var t
 # var index
@@ -212,22 +212,22 @@ naivesort:
 # var maxpos
 # var i
 # ifz index goto L25
-       lw  $8,68($29)
+       lw  $8,72($29)
 	beq  $8,0,L25
 # var T_5
 # T_5 = t [ index ]
        li   $9,4
        mult   $8,$9
        mflo   $8
-       lw  $9,64($29)
+       lw  $9,68($29)
        add   $8,$8,$9
        lw  $8,0($8)
 # max = T_5
        sw  $8,36($29)
 # i = index
-       lw  $10,68($29)
+       lw  $10,72($29)
 # maxpos = index
-       lw  $11,68($29)
+       lw  $11,72($29)
 # label L21
        sw  $8,24($29)
        sw  $10,32($29)
@@ -247,7 +247,7 @@ L21:
        li   $10,4
        mult   $9,$10
        mflo   $9
-       lw  $10,64($29)
+       lw  $10,68($29)
        add   $9,$9,$10
        lw  $9,0($9)
 # arg T_8
@@ -271,7 +271,7 @@ L21:
        li   $10,4
        mult   $9,$10
        mflo   $9
-       lw  $10,64($29)
+       lw  $10,68($29)
        add   $9,$9,$10
        lw  $9,0($9)
 # max = T_9
@@ -300,11 +300,11 @@ L18:
 L22:
 # var T_11
 # T_11 = t [ index ]
-       lw  $8,68($29)
+       lw  $8,72($29)
        li   $9,4
        mult   $8,$9
        mflo   $8
-       lw  $9,64($29)
+       lw  $9,68($29)
        add   $8,$8,$9
        lw  $8,0($8)
 # t [ maxpos ] = T_11
@@ -315,7 +315,7 @@ L22:
        add   $10,$10,$9
        sw  $8,0($10)
 # t [ index ] = max
-       lw  $10,68($29)
+       lw  $10,72($29)
        li   $11,4
        mult   $10,$11
        mflo   $10
@@ -325,8 +325,13 @@ L22:
 # arg t
 	 sw   $9,0($29)
 	move   $4,$9
+# var T_12
+# T_12 = index - 1
+       lw  $12,72($29)
+       li   $10, 1
+	sub $10, $12, $10
 # arg T_12
-       lw  $10,0($29)
+       sw  $10,64($29)
 	 sw   $10,4($29)
 	move   $5,$10
 # call naivesort
@@ -341,7 +346,7 @@ L25:
 L23:
 # endfunc 
 	 lw	$31,16($29)
-	 addiu	$sp,$sp,64
+	 addiu	$sp,$sp,68
 	 jr  $31
 	 nop
 	.end naivesort

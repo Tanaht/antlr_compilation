@@ -223,18 +223,8 @@ statement [SymbolTable symTab] returns [Code3a code]
   List<Type> args = ((FunctionType) f.type).getArguments();
 
   } (arg=argument_item[symTab] {
-
-
-	/*if(args.get(numArg) == Type.POINTER){
-		if(!($arg.expAtt.type instanceof ArrayType))
-			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, "Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
-	}
-  else{
-		if(args.get(numArg) != $arg.expAtt.type)
-			Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
-	}*/
+    $code.append($arg.expAtt.code);
     $code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
-
     numArg++;
   })*)
 	{
