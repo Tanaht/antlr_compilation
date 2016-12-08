@@ -50,8 +50,9 @@ function [SymbolTable symTab] returns [Code3a code]
         if(((FunctionType) f.type).prototype == false)
            Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 
-        if(argList.size() != paramsType.size())
-          Errors.miscError($IDENT, "Definition differente du prototype");
+
+        if(argList.size() != paramsType.size() || ((FunctionType) f.type).getReturnType() != $t.type)
+          Errors.miscError($FUNC_KW, "Definition differente du prototype [Nombre arguments ou type de retour différents]");
 
         for(int i=0; i < argList.size(); i++) {
           if(argList.get(i) != paramsType.get(i))
@@ -173,6 +174,13 @@ statement [SymbolTable symTab] returns [Code3a code]
   : ^(ASSIGN_KW a=expression[symTab] ( IDENT {
       //Assign Var
       Operand3a variable = symTab.lookup($IDENT.text);
+      if(variable == null) {
+        Errors.unknownIdentifier($ASSIGN_KW, $IDENT.text, null);
+      }
+
+      if(variable.type != $a.expAtt.type && $a.expAtt.type != Type.POINTER)
+        Errors.incompatibleTypes($ASSIGN_KW, variable.type, $a.expAtt.type, "Mauvaise Assignation");
+
       $code = Code3aGenerator.assignVar(variable, $a.expAtt);
     } | c=array_elem_assign[symTab, $a.expAtt] {
       //Assign Var Tab
@@ -223,6 +231,9 @@ statement [SymbolTable symTab] returns [Code3a code]
   List<Type> args = ((FunctionType) f.type).getArguments();
 
   } (arg=argument_item[symTab] {
+    if(!TypeCheck.checkType(args.get(numArg), $arg.expAtt.type))
+      Errors.incompatibleTypes($FCALL_S, args.get(numArg), $arg.expAtt.type , "Appelle de la fonction "+$IDENT.text);
+
     $code.append($arg.expAtt.code);
     $code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
     numArg++;
@@ -236,6 +247,9 @@ statement [SymbolTable symTab] returns [Code3a code]
 	}
 	|^(RETURN_KW exp=expression[symTab])
 		{
+      if(exp.type != Type.INT)
+        Errors.incompatibleTypes($RETURN_KW, Type.INT, exp.type, "Mauvais type de retour, seul les entiers sont supportés");
+
 			$code.append(exp.code);
 			$code.append(new Inst3a(Inst3a.TAC.RETURN,exp.place,null,null));
 		}
@@ -288,6 +302,13 @@ array_elem_assign [SymbolTable symTab, ExpAttribute valueToAssign] returns [Code
         if(variable == null)
           Errors.unknownIdentifier($IDENT, $IDENT.text, null);
 
+        //Test que l'index du tableau est un entier.
+        if(Type.INT != $a.expAtt.type)
+          Errors.incompatibleTypes($ARELEM, Type.INT, $a.expAtt.type, "");
+
+        if(Type.INT != valueToAssign.type && Type.POINTER != valueToAssign.type)
+          Errors.incompatibleTypes($ARELEM, Type.INT, valueToAssign.type, "Mauvaise assignation");
+
         $code = Code3aGenerator.assignVarTab(variable, $a.expAtt, valueToAssign);
       }
     ;
@@ -300,6 +321,10 @@ array_elem_value [SymbolTable symTab] returns [ExpAttribute expAtt]
 
         if(variable == null)
           Errors.unknownIdentifier($IDENT, $IDENT.text, null);
+
+        //Test que l'index du tableau est un entier.
+        if(Type.INT != $a.expAtt.type)
+          Errors.incompatibleTypes($ARELEM, Type.INT, $a.expAtt.type, "");
 
         Code3a code = Code3aGenerator.genVar(temp);
         code.append($a.expAtt.code);
@@ -373,6 +398,7 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
       Operand3a op = symTab.lookup($IDENT.text);
       Type typeFun = TypeCheck.checkFunc(op);
       FunctionSymbol f = null;
+
       if(typeFun == Type.ERROR)
         Errors.unknownIdentifier($IDENT, $IDENT.text, null);
 
@@ -386,9 +412,9 @@ primary_exp [SymbolTable symTab] returns [ExpAttribute expAtt]
     }
     (arg=argument_item[symTab]
     {
-      /*if(args.get(numArg) != $arg.expAtt.type)
-        Errors.incompatibleTypes($IDENT, args.get(numArg), $arg.expAtt.type, Pour le " + numArg + " arguments de la fonction "+$IDENT.text);
-*/
+
+      if(!TypeCheck.checkType(args.get(numArg), $arg.expAtt.type))
+        Errors.incompatibleTypes($FCALL, args.get(numArg), $arg.expAtt.type , "Appelle de la fonction "+$IDENT.text);
       code.append($arg.expAtt.code);
       code.append(new Inst3a(Inst3a.TAC.ARG, $arg.expAtt.place, null, null));
       numArg++;

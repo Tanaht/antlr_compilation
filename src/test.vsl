@@ -34,11 +34,13 @@ FUNC VOID main()
 FUNC VOID naivesort(t[], index )
 {
   INT max , maxpos, i
+
   IF index THEN  // il y a au moins deux elements
     {
      max := t[index]
      i:= index
      maxpos := index
+
      WHILE i+1 DO
        {
         IF plusgrandstrict(t[i], max) THEN

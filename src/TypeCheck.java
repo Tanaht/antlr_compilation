@@ -24,18 +24,14 @@ public class TypeCheck {
 		}
 		return Type.ERROR;
 	}
-	
-/*
-	public static Type checkArg(Type expected, Operand3a op) {
-		switch(expected) {
-			case Type.INT:
-				return op.type == Type.INT;
-			break;
-			case Type.POINTER:
-				return 
-			break;
-		}
-		return Type.ERROR;
+
+	/**
+	* return vrai, si op convient à expected, faux sinon
+	*/
+	public static boolean checkType(Type expected, Type type) {
+		if (expected == Type.INT)
+				return type == Type.INT;
+
+ 		return type == Type.POINTER || type instanceof ArrayType;
 	}
-*/
 }
