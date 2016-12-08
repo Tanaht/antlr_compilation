@@ -312,6 +312,7 @@ array_elem_value [SymbolTable symTab] returns [ExpAttribute expAtt]
           Errors.unknownIdentifier($IDENT, $IDENT.text, null);
 
         Code3a code = Code3aGenerator.genVar(temp);
+        code.append($a.expAtt.code);
         code.append(new Inst3a(Inst3a.TAC.TABVAR, temp, variable, $a.expAtt.place));
         $expAtt = new ExpAttribute(variable.type, code, temp);
       }
