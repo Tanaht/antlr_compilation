@@ -1,3 +1,4 @@
 *.class
 *.sh
 *.tokens
+*desktop.ini
