@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 VSLTreeParser.g 2016-12-08 18:19:17
+// $ANTLR 3.5.2 VSLTreeParser.g 2016-12-08 18:14:59
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
@@ -321,7 +321,7 @@ public class VSLTreeParser extends TreeParser {
 
 
 			        if(argList.size() != paramsType.size() || ((FunctionType) f.type).getReturnType() != t)
-			          Errors.miscError(FUNC_KW2, argList.size() + " != " + paramsType.size() + " || " + ((FunctionType) f.type).getReturnType() + " != " + t + "Definition differente du prototype [Nombre arguments ou type de retour différents]");
+			          Errors.miscError(FUNC_KW2, "Definition differente du prototype [Nombre arguments ou type de retour différents]");
 
 			        for(int i=0; i < argList.size(); i++) {
 			          if(argList.get(i) != paramsType.get(i))
