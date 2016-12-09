@@ -13,9 +13,15 @@ public class TypeCheck {
 	public static Type checkBinOp(Type t1, Type t2) {
 		if (t1 == Type.INT && t2 == Type.INT)
 			return Type.INT;
-		else {
-			return Type.ERROR;
-		}
+			
+		if(t1 == Type.INT && t2 == Type.POINTER)
+			return Type.INT;
+			
+		if(t1 == Type.POINTER && t2 == Type.INT)
+			return Type.INT;
+			
+		System.err.println("Return Type.ERROR");
+		return Type.ERROR;
 	}
 
 	public static Type checkFunc(Operand3a op){
@@ -29,9 +35,12 @@ public class TypeCheck {
 	* return vrai, si op convient à expected, faux sinon
 	*/
 	public static boolean checkType(Type expected, Type type) {
+		if(type == Type.POINTER)
+			return true;
+			
 		if (expected == Type.INT)
-				return type == Type.INT || type == Type.POINTER;
+				return type == Type.INT;
 
-		return type == Type.POINTER || type instanceof ArrayType;
+		return type instanceof ArrayType;
 	}
 }

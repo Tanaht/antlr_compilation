@@ -51,12 +51,15 @@ function [SymbolTable symTab] returns [Code3a code]
            Errors.redefinedIdentifier($IDENT, $IDENT.text,"");
 
 
-        if(argList.size() != paramsType.size() || ((FunctionType) f.type).getReturnType() != $t.type)
+		if(((FunctionType) f.type).getReturnType() != $t.type)
+			Errors.incompatibleTypes($FUNC_KW, ((FunctionType) f.type).getReturnType(), $t.type, "Le type de retour du prototype est différent de celui de la fonction");
+			
+        if(argList.size() != paramsType.size())
           Errors.miscError($FUNC_KW, "Definition differente du prototype [Nombre arguments ou type de retour différents]");
 
         for(int i=0; i < argList.size(); i++) {
           if(argList.get(i) != paramsType.get(i))
-            Errors.incompatibleTypes($IDENT, argList.get(i), paramsType.get(i), "Pour le " + i + " arguments de la fonction "+$IDENT.text);
+            Errors.incompatibleTypes($FUNC_KW, argList.get(i), paramsType.get(i), "Pour le " + i + " arguments de la fonction "+$IDENT.text);
         }
 
 
@@ -178,7 +181,7 @@ statement [SymbolTable symTab] returns [Code3a code]
         Errors.unknownIdentifier($ASSIGN_KW, $IDENT.text, null);
       }
 
-      if(variable.type != $a.expAtt.type && $a.expAtt.type != Type.POINTER)
+      if(!TypeCheck.checkType(variable.type, $a.expAtt.type))
         Errors.incompatibleTypes($ASSIGN_KW, variable.type, $a.expAtt.type, "Mauvaise Assignation");
 
       $code = Code3aGenerator.assignVar(variable, $a.expAtt);
