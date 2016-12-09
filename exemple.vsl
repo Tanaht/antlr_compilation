@@ -1,0 +1,149 @@
+PROTO INT acheter(magasins[], idproduit)
+PROTO VOID affichermagasins(magasins[])
+
+
+
+//affiche le nom du produit en fonction de son id
+//===============================================================
+FUNC VOID printnomproduit(idproduit)
+{
+	IF idproduit
+	THEN IF idproduit - 1
+		 THEN IF idproduit - 2
+			  THEN IF idproduit - 3
+				   THEN PRINT "[Pomme]"
+				   ELSE PRINT "[Légume ancien Pané]"
+				   FI	
+			  ELSE PRINT "[Pommes de terre]"
+			  FI
+		 ELSE PRINT "[Boudins Blanc]"
+		 FI
+	ELSE PRINT "[Carottes]"
+	FI
+}
+
+FUNC INT checkpossiblevalue(current, asked)
+{
+	INT compteur, returnvalue
+	compteur := 0
+	returnvalue := 1
+	
+	
+	WHILE compteur - current - 1
+	DO
+	{
+		IF compteur - asked
+		THEN returnvalue := 1//instruction continue;
+		ELSE RETURN 0
+		FI
+		compteur := compteur + 1
+	}
+	DONE
+	
+	//valeurs demandée trop importante
+	RETURN 1
+	
+}
+
+
+//Affiche la liste des produits dans le panier
+//===============================================================
+FUNC VOID afficherpanier(panier[])
+{
+	INT compteur
+	compteur := 0
+	
+	PRINT "\n======================\n"
+	WHILE compteur - 5
+	DO
+	{
+		PRINT "\t"
+		printnomproduit(compteur)
+		PRINT ": ", panier[compteur], "\n"
+		compteur := compteur + 1
+	}
+	DONE
+	PRINT "\n======================\n"
+}
+
+//Achat en ligne avec un panier virtuel et une liste de produits
+//===============================================================
+FUNC VOID main()
+{
+	INT magasins[5], panier[5], compteur
+	compteur := 0
+	
+	magasins[0] := 6//Carottes
+	magasins[1] := 20//Boudin blanc
+	magasins[2] := 9//Pomme de terre
+	magasins[3] := 5//Pané
+	magasins[4] := 3//Pomme
+	
+	panier[0] := 0//Carottes
+	panier[1] := 0//Boudin blanc
+	panier[2] := 0//Pomme de terre
+	panier[3] := 0//Pané
+	panier[4] := 0//Pomme
+	
+	PRINT "Contenu du magasin:\n"
+	affichermagasins(magasins)
+	
+	WHILE compteur - 5
+	DO
+	{	
+		panier[compteur] := acheter(magasins, compteur)
+		compteur := compteur + 1
+	}
+	DONE
+	
+	PRINT "Votre panier:\n"
+	afficherpanier(panier)
+	PRINT "Reste dans le magasins:\n"
+	affichermagasins(magasins)
+}
+
+//Permet d'afficher la liste des produits proposé par le magasins
+//===============================================================
+FUNC VOID affichermagasins(magasins[])
+{
+	INT compteur
+	compteur := 0
+	
+	PRINT "\n======================\n"
+	WHILE compteur - 5
+	DO
+	{
+		PRINT "\t"
+		printnomproduit(compteur)
+		PRINT ": ", magasins[compteur], "\n"
+		compteur := compteur + 1
+	}
+	DONE
+	
+	PRINT "\n======================\n"
+}
+
+//Permet d'acheter un produit dans le magasin
+//===============================================================
+FUNC INT acheter(magasins[], idproduit)
+{
+	INT quantiter
+	PRINT "Combien de "
+	printnomproduit(idproduit)
+	PRINT " souhaitez-vous acheter : "
+	
+	READ quantiter
+	
+	WHILE checkpossiblevalue(magasins[idproduit], quantiter)
+	DO
+	{
+		PRINT "Il n'y a pas assez d'exemplaire dans le magasin\n\tVeuillez changer votre valeur: "
+		READ quantiter
+	}
+	DONE
+	
+	
+	magasins[idproduit] := magasins[idproduit] - quantiter
+	
+	RETURN quantiter		
+}
